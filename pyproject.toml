@@ -1,1 +1,15 @@
+#alternative to setup.py and requirements.txt and follows PEP 518
+[build-system]
+requires = ['setuptools>=61.0']
+build-backend = ['setuptools.build_meta']
+
+#meta-data
+[project]
+name = "interpolating_neural_networks"
+
+[project.urls]
+"Homepage" =
+"Bug Tracker" = 
+
+
 
