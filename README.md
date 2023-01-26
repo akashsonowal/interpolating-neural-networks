@@ -6,7 +6,7 @@ This repo contains the source code of my MTech Thesis work at IIT Kanpur. It is 
 
 ## Citing
 
-'''
+```
 @misc{interpolatingneuralnetworks,
   author = {Akash Sonowal, Dr. Shankar Prawesh},
   title = {Interpolating Neural Networks in Asset Pricing},
@@ -14,4 +14,4 @@ This repo contains the source code of my MTech Thesis work at IIT Kanpur. It is 
   year = {2022},
   note = "Version 1"
 }
-'''
+```
