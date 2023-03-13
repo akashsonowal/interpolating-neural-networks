@@ -3,6 +3,11 @@ This repo contains the source code of my MTech Thesis work at IIT Kanpur. It is 
 
 ## Work in progress (Stay tuned!)
 
+## Usage
+```
+$ pip install interpolating-neural-networks
+```
+
 
 ## Citing
 
