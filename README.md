@@ -6,8 +6,7 @@ This repo contains the source code of my MTech Thesis work at IIT Kanpur. It is 
 $ pip install interpolating-neural-networks
 ```
 
-## Demo
-https://www.kaggle.com/code/akashsonowal/interpolating-neural-networks
+## Demo (Kaggle Notebook)
 
 ## Citing
 
