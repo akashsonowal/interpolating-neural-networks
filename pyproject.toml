@@ -1,14 +1,6 @@
-[build-system]
-requires = ['setuptools>=61.0']
-build-backend = ['setuptools.build_meta']
+[tool.black]
 
-#meta-data
-[project]
-name = "interpolating_neural_networks"
-
-[project.urls]
-"Homepage" =
-"Bug Tracker" = 
+[tool.isort]
 
 
 
