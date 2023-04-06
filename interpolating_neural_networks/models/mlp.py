@@ -1,4 +1,5 @@
 import tensorflow as tf
+from tensorflow.keras.layers import Input, Dense
 
 class DeepNN(tf.keras.Model):
   def __init__(self, depth):
