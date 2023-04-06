@@ -14,19 +14,12 @@ class BaseNN(tf.keras.Model):
       x = layer(x)
     return self.output_layer(x)
 
-
-class DeepNN(tf.keras.Model):
-  def __init__(self, depth):
-    super(DeepNN, self).__init__()
-    pass
+class DeepNN(BaseNN):
+  def __init__(self, depth, input_dim):
+    super(DeepNN, self).__init__(input_dim)
+    self.hidden_layers = [Dense(32, activation='relu') for _ in range(depth)]
   
-  def call(self, x):
-    pass
-  
-class WideNN(tf.keras.Model):
-  def __init__(self, width):
-    super(WideNN, self).__init__()
-    pass
-  
-  def call(self, x):
-    pass
+class WideNN(BaseNN):
+  def __init__(self, width, input_dim):
+    super(WideNN, self).__init__(input_dim)
+    self.hidden_layers = [Dense(width, activation='relu') for _ in range(2)]
