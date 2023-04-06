@@ -8,6 +8,11 @@ $ pip install interpolating-neural-networks
 
 ## Demo (Kaggle Notebook)
 
+## Notes
+- There are no regularization terms like weight decay, dropout.
+- Each network is trained for a long time to achieve near-zero training risk. The learning rate is adjusted differently for models of different sizes.
+- To make the model less sensitive to the initialization in the under-parameterization region, their experiments adopted a “weight reuse” scheme: the parameters obtained from training a smaller neural network are used as initialization for training larger networks.
+
 ## Citing
 
 ```
