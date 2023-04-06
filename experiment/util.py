@@ -1,3 +1,4 @@
+from tqdm import tqdm
 import tensorflow as tf
 from interpolating_neural_network.models import model
 
