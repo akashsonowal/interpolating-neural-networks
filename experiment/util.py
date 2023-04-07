@@ -24,4 +24,11 @@ def train_step(features, labels):
     t_loss = loss_object(labels, predictions)
     
     test_loss(t_loss)
-  
+    
+class MLPTrainer(tf.keras.Model):
+  def __init__(self, model, **kwargs):
+    super(MLPTrainer, self).__init__(**kwargs)
+    self.model = model
+    
+  @tf.function  
+  def train_step(self, 
