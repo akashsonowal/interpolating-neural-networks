@@ -2,6 +2,10 @@ import logging
 import argparse
 import tensorflow as tf
 
+if is_wandb_available():
+  import wandb
+
+
 class TrainNN:
   pass
 
