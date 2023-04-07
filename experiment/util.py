@@ -1,6 +1,12 @@
+#!/usr/bin/env python
+# coding=utf-8
+
 from tqdm import tqdm
 import tensorflow as tf
 from interpolating_neural_network.models import model
+
+if is_wandb_available():
+  import wandb
 
 loss_object = tf.keras.losses.MeanSquaredError()
 optimizer = tf.keras.optimizers.Adam()
