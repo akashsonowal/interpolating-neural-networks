@@ -2,9 +2,12 @@ import logging
 import argparse
 import tensorflow as tf
 
+logger = logging.getLogger(__name__)
+
 if is_wandb_available():
   import wandb
 
+logger.info('Say Hi')
 
 class TrainNN:
   pass
