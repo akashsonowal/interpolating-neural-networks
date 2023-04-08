@@ -6,6 +6,8 @@ import tensorflow as tf
 
 logger = logging.getLogger(__name__)
 
+trainer = MLPTrainer.compile(optimizer=optimizer, loss="mse")
+
 if is_wandb_available():
   import wandb
 
