@@ -7,6 +7,7 @@ import tensorflow as tf
 logger = logging.getLogger(__name__)
 
 trainer = MLPTrainer.compile(optimizer=optimizer, loss="mse")
+trainer.fit(train_dataset, epochs=epochs, callbacks=[callbacks)
 
 if is_wandb_available():
   import wandb
