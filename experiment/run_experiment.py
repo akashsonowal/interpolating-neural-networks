@@ -30,7 +30,7 @@ def main(args):
   train_dataset, val_dataset = FinancialDataset(data_dir, 
                                                 train_val_split=args.train_val_split,
                                                 input_dim=args.input_dim, 
-                                                linear=args.linear)
+                                                linear=args.linear)()
 
   train_dataloader, val_dataloader =  DistributedDataLoder(train_dataset, 
                                                            val_dataset, 
