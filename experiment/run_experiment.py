@@ -41,13 +41,13 @@ def main(args):
     if args.expt_type=='depth':
       for depth in args.depths:
           model = ExperimentalMLP(input_dim=args.input_dim, depth=depth, width=None)
-          trainer = MLPDistributedTrainer(epochs=args.epochs, callbacks=[WandbCallBack()])
-          trainer.fit(model, train_dataloader, val_dataloader)
+          trainer = MLPDistributedTrainer(model, epochs=args.epochs, callbacks=[WandbCallBack()])
+          trainer.fit(train_dataloader, val_dataloader)
     else:
       for width in args.widths:
           model = ExperimentalMLP(input_dim=args.input_dim, depth=None, width=width)
-          trainer = MLPDistributedTrainer(epochs=args.epochs, callbacks=[WandbCallBack()])
-          trainer.fit(model, train_dataloader, val_dataloader)
+          trainer = MLPDistributedTrainer(model, epochs=args.epochs, callbacks=[WandbCallBack()])
+          trainer.fit(train_dataloader, val_dataloader)
 
 if __name__ == '__main__':
   args = get_args_parser()
