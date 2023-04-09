@@ -2,23 +2,32 @@
 # trainer = MLPDistributedTrainer(epochs=args.epochs, callbacks=[WandbCallBack()])
 # trainer.fit(model, train_dataloader, val_dataloader)
 import tensorflow as tf
-from .util import strategy, compute_loss, loss_object, train_loss, optimizer
-startegy = 
+# from .util import strategy, compute_loss, loss_object, train_loss, optimizer
 
 class MLPDistributedTrainer:
-  def __init__(self, model, epochs):
-    self.model = model
+  def __init__(self, epochs, callbacks):
     self.epochs = epochs 
+    self.callbacks = callbacks
+    self.loss_object = tf.keras.losses.MeanSquaredError(reduction=tf.keras.losses.Reduction.NONE)
+    self.optimizer = 
+    
+  def _compute_loss(self, labels, predictions, model_losses, global_batch_size):
+    per_example_loss = self.loss_object(labels, predictions)
+    loss = tf.nn.compute_average_loss(per_example_loss,
+                                      global_batch_size=global_batch_size)
+    if model_losses:
+      loss += tf.nn.scale_regularization_loss(tf.add_n(model_losses))
+    return loss
     
   @tf.function
-  def train_step(self, inputs):
+  def train_step(self, inputs, model):
     features, labels = inputs
     with tf.GradientTape() as tape:
-      predictions = self.model(features, training=True)
-      loss = compute_loss(labels, predictions, model.losses)
+      predictions = model(features, training=True)
+      loss = self._compute_loss(labels, predictions, model.losses, global_batch_size)
 
-    gradients = tape.gradient(loss, self.model.trainable_variables)
-    optimizer.apply_gradients(zip(gradients, self.model.trainable_variables))
+    gradients = tape.gradient(loss, model.trainable_variables)
+    optimizer.apply_gradients(zip(gradients, model.trainable_variables))
 
     train_loss.update_state(labels, predictions)
     return loss 
