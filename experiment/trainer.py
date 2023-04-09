@@ -54,3 +54,37 @@ def distributed_train_step(dataset_inputs):
 @tf.function
 def distributed_test_step(dataset_inputs):
   return strategy.run(test_step, args=(dataset_inputs,))
+
+
+class MLPDistributedTrainer:
+
+  def __init__(self, epochs):
+    self.epochs = epochs 
+
+  @tf.function
+  def distributed_train_epoch(self, dataset):
+    total_loss = 0.0
+    num_batches = 0
+    for x in dataset:
+      per_replica_losses = strategy.run(train_step, args=(x,))
+      total_loss += strategy.reduce(
+        tf.distribute.ReduceOp.SUM, per_replica_losses, axis=None)
+      num_batches += 1
+    return total_loss / tf.cast(num_batches, dtype=tf.float32)
+
+  def train(self, callbacks):
+    for epoch in range(self.epochs):
+      train_loss = self.distributed_train_epoch(train_dist_dataset)
+
+      template = ("Epoch {}, Loss: {}")
+      print(template.format(epoch + 1, train_loss))
+
+      if callbacks is not None:
+        for callback in callbacks:
+          print(train_loss.numpy())
+          callback.on_epoch_end(epoch, logs={"train_loss": train_loss.numpy()})
+
+      #  # Logging with W&B
+      # wandb.log({"train_loss": loss.numpy(),
+      #             "val_loss": val_loss.numpy()
+      # })
