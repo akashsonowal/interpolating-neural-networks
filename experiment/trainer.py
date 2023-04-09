@@ -59,8 +59,8 @@ class MLPDistributedTrainer:
         # Validation Loop
         for x in val_data_loader:
           self.distributed_val_step(model, x)
-        val_loss.reset_states()
+        self.val_loss.reset_states()
 
       if self.callbacks is not None:on
         for callback in self.callbacks:
-          callback.on_train_end(logs={"train_loss": train_loss.numpy(), "val_loss": val_loss.numpy()})
+          callback.on_train_end(logs={"train_loss": train_loss.numpy(), "val_loss": self.val_loss.numpy()})
