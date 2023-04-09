@@ -1,17 +1,13 @@
 #!/usr/bin/env python
 # coding=utf-8
+import wandb
 
 class WandbCallBack(tf.keras.callbacks.Callback):
-  wandb.init(project="Interpolating NN", config={args})
-  def __init__(self):
+  def __init__(self, args):
+      wandb.init(project="Interpolating NN Experiments", config={args})
       super(WandbCallBack, self).__init__()
-      self.epoch = 0
   def on_epoch_end(self, epoch, logs={}):
-      self.epoch += 1
       wandb.log(logs)
-
-
-
 
 
 ########################333
