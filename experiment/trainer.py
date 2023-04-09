@@ -10,8 +10,8 @@ class MLPDistributedTrainer:
     self.callbacks = callbacks
     self.loss_object = tf.keras.losses.MeanSquaredError(reduction=tf.keras.losses.Reduction.NONE)
     self.optimizer = tf.keras.optimizers.Adam()
-    self.train_loss = 
-    self.val_loss = 
+    self.train_loss = tf.keras.metrics.MeanSquaredError(name='train_loss')
+    self.val_loss = tf.keras.metrics.MeanSquaredError(name='val_loss')
     
   def _compute_loss(self, labels, predictions, model_losses, global_batch_size):
     per_example_loss = self.loss_object(labels, predictions)
