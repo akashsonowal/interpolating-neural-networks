@@ -1,136 +1,50 @@
 import argparse
 from pathlib import Path
 
-import logging
+import numpy as np
 import tensorflow as tf
 
-
-wandb_cb = WandbCallBack()
-callbacks = [wandb_cb]
-
-trainer = MLPDistributedTrainer(10)
-trainer.train(callbacks)
-##########################################################33
-logger = logging.getLogger(__name__)
-
-trainer = MLPTrainer.compile(optimizer=optimizer, loss="mse")
-trainer.fit(train_dataset, epochs=epochs, callbacks=[callbacks)
-
-if is_wandb_available():
-  import wandb
-
-logger.info('Say Hi')
+from .util import WandbCallBack
+from interpolating_neural_networks.data import FinancialDataset, DistributedDataLoder
 
 np.random_seed(42)
 tf.random_set_seed(42)
 
-def _setup_parser():
-  """Setup Python's ArgumentParser with data, model, trainer, and other arguments."""
-  pass
+def get_args_parser():
+    parser = argparse.ArgumentParser('Interpolating NN experiment setup')
+    parser.add_argument('--train_test_split', default=1/3, type=float, help='train test split ratio')
+    parser.add_argument('--BATCH_SIZE_PER_REPLICA', default=32, type=int, help='batch size of training on a single GPU')
+    parser.add_argument('--EPOCHS', default=15, type=int, help='training epochs')
+    parser.add_argument('--input_dim', default=100, type=int, help='input feature set size')
+    parser.add_argument('--linear', default=False, const=False, nargs='?', choices=[False, True], help='linear pattern in data')
+    parser.add_argument('--expt_type', default='depth', const='depth', nargs='?', choices=['depth', 'width'], help='experiment type')
+    parser.add_argument('--depths', default=[5, 10, 15], type=int, nargs='+', help='depth of NNs for increasing depth experiment (list of integers)')
+    parser.add_argument('--widths', default=[16, 32, 64], type=int, nargs='+', help='width of NNs for increasing width experiment (list of integers)')
+    return parser.parse_args()
 
-def main():
-  parser = _setup_parser()
-  args = parser.parse_args()
-  data, model = setup_data_and_model_from_args(args)
-  
-  log_dir = Path("training") / "logs"
-  _ensure_logging_dir(log_dir)
-  
-  if args.wandb:
-    logger = 
-    
-  trainer = xyz
-  trainer.fit(model, datamodule)
+def main(args):
+  data_dir = Path("data")
+  strategy = tf.distribute.MirroredStrategy()
+  print('Number of devices: {}'.format(strategy.num_replicas_in_sync))
 
-if __name__ == "__main__":
-  main()
+  dataset = FinancialDataset(data_dir, input_dim=args.input_dim, linear=args.linear)
+  train_dataloader, val_dataloader =  DistributedDataLoder(train_dataset, val_dataset, 
+                                                           batch_size=args.BATCH_SIZE_PER_REPLICA, 
+                                                           num_workers=strategy.num_replicas_in_sync)
+  CALLBACKS = [WandbCallBack()]
 
-
-
-class TrainNN:
-  pass
-
-train_ds = tf.data.Dataset.from_tensor_slices(
-    (x_train, y_train)).shuffle(10000).batch(32)
-
-test_ds = tf.data.Dataset.from_tensor_slices((x_test, y_test)).batch(32)
-
-loss_object = tf.keras.losses()
-optimizer = tf.keras.optimizers.Adam()
-train_metric = tf.keras.metrics.Mean(name="Train Loss")
-test_metric = tf.keras.metrics.Mean(name="Train Loss")
-  
-EPOCHS = 5
-
-with mirrored_strategy.scope():
-  model = xyz
-  optimizer = tf.keras.optimizers.Adam()
-
-loss_object = tf.keras.losses.BinaryCrossentropy(
-  from_logits=True,
-  reduction=tf.keras.losses.Reduction.NONE)
-
-def compute_loss(labels, predictions):
-  per_example_loss = loss_object(labels, predictions)
-  return tf.nn.compute_average_loss(per_example_loss, global_batch_size=global_batch_size)
-
-def train_step(inputs):
-  features, labels = inputs
-
-  with tf.GradientTape() as tape:
-    predictions = model(features, training=True)
-    loss = compute_loss(labels, predictions)
-
-  gradients = tape.gradient(loss, model.trainable_variables)
-  optimizer.apply_gradients(zip(gradients, model.trainable_variables))
-  return loss
-
-@tf.function
-def distributed_train_step(dist_inputs):
-  per_replica_losses = mirrored_strategy.run(train_step, args=(dist_inputs,))
-  return mirrored_strategy.reduce(tf.distribute.ReduceOp.SUM, per_replica_losses,
-                         axis=None)
-
-for epoch in range(EPOCHS):
-  # Reset the metrics at the start of the next epoch
-  train_loss.reset_states()
-  train_accuracy.reset_states()
-  test_loss.reset_states()
-  test_accuracy.reset_states()
-
-  for images, labels in train_ds:
-    train_step(images, labels)
-
-  for test_images, test_labels in test_ds:
-    test_step(test_images, test_labels)
-
-  print(
-    f'Epoch {epoch + 1}, '
-    f'Loss: {train_loss.result()}, '
-    f'Accuracy: {train_accuracy.result() * 100}, '
-    f'Test Loss: {test_loss.result()}, '
-    f'Test Accuracy: {test_accuracy.result() * 100}'
-  )
-  
-  
-
-class NewRiskCurveExperiment:
-  def __init__(self):
-    pass
-  
-  def run():
-    
-    
-    
-    with tf.GradientTape() as tape:
-      
-    pass
-  
-  def plot():
-    pass
+  with strategy.scope():
+    if args.expt_type=='depth':
+      for depth in args.depths:
+          model = ExperimentalMLP(input_dim=args.input_dim, depth=depth, width=None)
+          trainer = MLPDistributedTrainer(epochs=EPOCHS, callbacks=CALLBACKS)
+          trainer.fit(model, train_dataloader, val_dataloader)
+    else:
+      for width in args.widths:
+          model = ExperimentalMLP(input_dim=args.input_dim, depth=None, width=width)
+          trainer = MLPDistributedTrainer(epochs=EPOCHS, callbacks=CALLBACKS)
+          trainer.fit(model, train_dataloader, val_dataloader)
 
 if __name__ == '__main__':
-  exp = NewRiskCurveExperiment()
-  parser = argparse.ArgumentParser()
-  args = parser.parse_args()
-  exp.run()
+  args = get_args_parser()
+  main(args)
