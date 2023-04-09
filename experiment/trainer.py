@@ -5,6 +5,19 @@
 class MLPDistributedTrainer:
   def __init__(self, epochs):
     self.epochs = epochs 
+  
+  @tf.function
+  def train_step(self, inputs):
+    with tf.GradientTape() as tape:
+      predictions = model(features, training=True)
+      loss = compute_loss(features, predictions, model.losses)
+
+    gradients = tape.gradient(loss, model.trainable_variables)
+    optimizer.apply_gradients(zip(gradients, model.trainable_variables))
+
+    train_loss.update_state(labels, predictions)
+    return loss 
+    
 
   @tf.function
   def distributed_train_epoch(self, dataset):
@@ -17,7 +30,7 @@ class MLPDistributedTrainer:
       num_batches += 1
     return total_loss / tf.cast(num_batches, dtype=tf.float32)
 
-  def train(self, callbacks):
+  def fit(self, model, train_dataloader, val_dataloader):
     for epoch in range(self.epochs):
       train_loss = self.distributed_train_epoch(train_dist_dataset)
 
