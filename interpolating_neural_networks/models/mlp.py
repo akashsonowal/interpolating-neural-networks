@@ -6,7 +6,7 @@ from .util import BaseMLP
     
 class ExperimentalMLP(BaseMLP):
   def __init__(self, **kwargs):
-    super(ExperimentalMLP, self).__init__()
+    super(ExperimentalMLP, self).__init__(**kwargs)
     if kwargs['depth'] is not None:
       self.input_layer = Dense(32, input_shape=(kwargs['input_dim'], ))
       self.hidden_layers = [Dense(32, activation='relu') for _ in range(kwargs['depth']-1)]
