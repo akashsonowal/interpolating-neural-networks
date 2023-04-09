@@ -4,6 +4,13 @@ from pathlib import Path
 import logging
 import tensorflow as tf
 
+
+wandb_cb = WandbCallBack()
+callbacks = [wandb_cb]
+
+trainer = MLPDistributedTrainer(10)
+trainer.train(callbacks)
+##########################################################33
 logger = logging.getLogger(__name__)
 
 trainer = MLPTrainer.compile(optimizer=optimizer, loss="mse")
