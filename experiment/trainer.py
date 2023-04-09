@@ -9,7 +9,9 @@ class MLPDistributedTrainer:
     self.epochs = epochs 
     self.callbacks = callbacks
     self.loss_object = tf.keras.losses.MeanSquaredError(reduction=tf.keras.losses.Reduction.NONE)
-    self.optimizer = 
+    self.optimizer = tf.keras.optimizers.Adam()
+    self.train_loss = 
+    self.val_loss = 
     
   def _compute_loss(self, labels, predictions, model_losses, global_batch_size):
     per_example_loss = self.loss_object(labels, predictions)
@@ -27,7 +29,7 @@ class MLPDistributedTrainer:
       loss = self._compute_loss(labels, predictions, model.losses, global_batch_size)
 
     gradients = tape.gradient(loss, model.trainable_variables)
-    optimizer.apply_gradients(zip(gradients, model.trainable_variables))
+    self.optimizer.apply_gradients(zip(gradients, model.trainable_variables))
 
     train_loss.update_state(labels, predictions)
     return loss 
