@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 # in trainer.py
+
+trainer = MLPDistributedTrainer(epochs=EPOCHS, callbacks=CALLBACKS)
+trainer.fit(model, train_dataloader, val_dataloader)
+
+################3
 with strategy.scope():
   loss_object = tf.keras.losses.MeanSquaredError(reduction=tf.keras.losses.Reduction.NONE)
 

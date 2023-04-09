@@ -31,18 +31,17 @@ def main(args):
   train_dataloader, val_dataloader =  DistributedDataLoder(train_dataset, val_dataset, 
                                                            batch_size=args.BATCH_SIZE_PER_REPLICA, 
                                                            num_workers=strategy.num_replicas_in_sync)
-  CALLBACKS = [WandbCallBack()]
 
   with strategy.scope():
     if args.expt_type=='depth':
       for depth in args.depths:
           model = ExperimentalMLP(input_dim=args.input_dim, depth=depth, width=None)
-          trainer = MLPDistributedTrainer(epochs=EPOCHS, callbacks=CALLBACKS)
+          trainer = MLPDistributedTrainer(epochs=EPOCHS, callbacks=[WandbCallBack()])
           trainer.fit(model, train_dataloader, val_dataloader)
     else:
       for width in args.widths:
           model = ExperimentalMLP(input_dim=args.input_dim, depth=None, width=width)
-          trainer = MLPDistributedTrainer(epochs=EPOCHS, callbacks=CALLBACKS)
+          trainer = MLPDistributedTrainer(epochs=EPOCHS, callbacks=[WandbCallBack()])
           trainer.fit(model, train_dataloader, val_dataloader)
 
 if __name__ == '__main__':
