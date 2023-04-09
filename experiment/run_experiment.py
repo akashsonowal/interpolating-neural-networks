@@ -23,7 +23,7 @@ def get_args_parser():
     return parser.parse_args()
 
 def main(args):
-  data_dir = Path("data")
+  data_dir = Path("../data/")
   strategy = tf.distribute.MirroredStrategy()
   print('Number of devices: {}'.format(strategy.num_replicas_in_sync))
 
@@ -39,15 +39,16 @@ def main(args):
 
   with strategy.scope():
     loss_object = tf.keras.losses.MeanSquaredError(reduction=tf.keras.losses.Reduction.NONE)
+    wandb_callbacks = WandbCallBack(args)
     if args.expt_type=='depth':
       for depth in args.depths:
           model = ExperimentalMLP(input_dim=args.input_dim, depth=depth, width=None)
-          trainer = MLPDistributedTrainer(model, epochs=args.epochs, callbacks=[WandbCallBack()])
+          trainer = MLPDistributedTrainer(model, epochs=args.epochs, callbacks=[wandb_callbacks])
           trainer.fit(train_dataloader, val_dataloader, args.batch_size_per_replica * strategy.num_replicas_in_sync)
     else:
       for width in args.widths:
           model = ExperimentalMLP(input_dim=args.input_dim, depth=None, width=width)
-          trainer = MLPDistributedTrainer(model, epochs=args.epochs, callbacks=[WandbCallBack()])
+          trainer = MLPDistributedTrainer(model, epochs=args.epochs, callbacks=[wandb_callbacks])
           trainer.fit(train_dataloader, val_dataloader, args.batch_size_per_replica * strategy.num_replicas_in_sync)
 
 if __name__ == '__main__':
