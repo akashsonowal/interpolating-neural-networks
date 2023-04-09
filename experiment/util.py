@@ -1,19 +1,13 @@
 #!/usr/bin/env python
 # coding=utf-8
-from typing import Optional, Dict, Any
 
 class WandbCallBack(tf.keras.callbacks.Callback):
-  wandb.init(project="inn_smoke_test",
-        config={args})
-
+  wandb.init(project="Interpolating NN", config={args})
   def __init__(self):
       super(WandbCallBack, self).__init__()
       self.epoch = 0
-    
-  def on_epoch_end(self, epoch, logs: Optional[Dict[str, Any]] = None) -> None:
+  def on_epoch_end(self, epoch, logs={}):
       self.epoch += 1
-      if logs is None: logs = dict() 
-      print("Hi", logs)
       wandb.log(logs)
 
 
