@@ -43,12 +43,12 @@ def main(args):
       for depth in args.depths:
           model = ExperimentalMLP(input_dim=args.input_dim, depth=depth, width=None)
           trainer = MLPDistributedTrainer(model, epochs=args.epochs, callbacks=[WandbCallBack()])
-          trainer.fit(train_dataloader, val_dataloader, args.batch_size_per_replica)
+          trainer.fit(train_dataloader, val_dataloader, args.batch_size_per_replica * strategy.num_replicas_in_sync)
     else:
       for width in args.widths:
           model = ExperimentalMLP(input_dim=args.input_dim, depth=None, width=width)
           trainer = MLPDistributedTrainer(model, epochs=args.epochs, callbacks=[WandbCallBack()])
-          trainer.fit(train_dataloader, val_dataloader, args.batch_size_per_replica)
+          trainer.fit(train_dataloader, val_dataloader, args.batch_size_per_replica * strategy.num_replicas_in_sync)
 
 if __name__ == '__main__':
   args = get_args_parser()
