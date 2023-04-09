@@ -2,20 +2,22 @@
 # trainer = MLPDistributedTrainer(epochs=args.epochs, callbacks=[WandbCallBack()])
 # trainer.fit(model, train_dataloader, val_dataloader)
 import tensorflow as tf
-from .util import compute_loss
+from .util import compute_loss, train_loss
 
 class MLPDistributedTrainer:
-  def __init__(self, epochs):
+  def __init__(self, model, epochs):
+    self.model = model
     self.epochs = epochs 
   
   @tf.function
   def train_step(self, inputs):
+    features, labels = inputs
     with tf.GradientTape() as tape:
-      predictions = model(features, training=True)
+      predictions = self.model(features, training=True)
       loss = compute_loss(features, predictions, model.losses)
 
-    gradients = tape.gradient(loss, model.trainable_variables)
-    optimizer.apply_gradients(zip(gradients, model.trainable_variables))
+    gradients = tape.gradient(loss, self.model.trainable_variables)
+    optimizer.apply_gradients(zip(gradients, self.model.trainable_variables))
 
     train_loss.update_state(labels, predictions)
     return loss 
