@@ -16,8 +16,6 @@ with strategy.scope():
   
   train_loss = tf.keras.metrics.MeanSquaredError(name='train_loss')
   test_loss = tf.keras.metrics.MeanSquaredError(name='test_loss')
-
-  model = model = ExperimentalMLP(args)
   optimizer = tf.keras.optimizers.Adam()
 
 class WandbCallBack(tf.keras.callbacks.Callback):
