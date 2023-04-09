@@ -38,6 +38,7 @@ def main(args):
                                                            num_workers=strategy.num_replicas_in_sync)
 
   with strategy.scope():
+    loss_object = tf.keras.losses.MeanSquaredError(reduction=tf.keras.losses.Reduction.NONE)
     if args.expt_type=='depth':
       for depth in args.depths:
           model = ExperimentalMLP(input_dim=args.input_dim, depth=depth, width=None)
