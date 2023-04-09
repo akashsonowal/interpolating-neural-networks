@@ -2,7 +2,7 @@
 # trainer = MLPDistributedTrainer(epochs=args.epochs, callbacks=[WandbCallBack()])
 # trainer.fit(model, train_dataloader, val_dataloader)
 import tensorflow as tf
-from .util import compute_loss, train_loss, optimizer
+from .util import strategy, compute_loss, train_loss, optimizer
 
 class MLPDistributedTrainer:
   def __init__(self, model, epochs):
