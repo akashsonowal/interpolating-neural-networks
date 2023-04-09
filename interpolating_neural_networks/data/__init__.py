@@ -1,2 +1,2 @@
-from .dataset import 
+from .dataset import FinancialDataset
 from .dataloader import
