@@ -12,7 +12,7 @@ tf.random_set_seed(42)
 
 def get_args_parser():
     parser = argparse.ArgumentParser('Interpolating NN experiment setup')
-    parser.add_argument('--train_test_split', default=1/3, type=float, help='train test split ratio')
+    parser.add_argument('--train_val_split', default=1/3, type=float, help='train val split ratio')
     parser.add_argument('--batch_size_per_replica', default=32, type=int, help='batch size of training on a single GPU')
     parser.add_argument('--epochs', default=15, type=int, help='training epochs')
     parser.add_argument('--input_dim', default=100, type=int, help='input feature set size')
@@ -27,8 +27,13 @@ def main(args):
   strategy = tf.distribute.MirroredStrategy()
   print('Number of devices: {}'.format(strategy.num_replicas_in_sync))
 
-  dataset = FinancialDataset(data_dir, input_dim=args.input_dim, linear=args.linear)
-  train_dataloader, val_dataloader =  DistributedDataLoder(train_dataset, val_dataset, 
+  train_dataset, val_dataset = FinancialDataset(data_dir, 
+                                                train_val_split=args.train_val_split,
+                                                input_dim=args.input_dim, 
+                                                linear=args.linear)
+
+  train_dataloader, val_dataloader =  DistributedDataLoder(train_dataset, 
+                                                           val_dataset, 
                                                            batch_size=args.batch_size_per_replica, 
                                                            num_workers=strategy.num_replicas_in_sync)
 
