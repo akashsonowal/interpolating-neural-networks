@@ -22,7 +22,7 @@ class MLPDistributedTrainer:
     return loss
     
   @tf.function
-  def train_step(self, inputs, model):
+  def train_step(self, model, inputs, global_batch_size):
     features, labels = inputs
     with tf.GradientTape() as tape:
       predictions = model(features, training=True)
@@ -30,42 +30,38 @@ class MLPDistributedTrainer:
 
     gradients = tape.gradient(loss, model.trainable_variables)
     self.optimizer.apply_gradients(zip(gradients, model.trainable_variables))
-
-    train_loss.update_state(labels, predictions)
+    self.train_loss.update_state(labels, predictions)
     return loss 
   
   @tf.function
-  def test_step(self, inputs):
+  def val_step(self, model, inputs):
     features, labels = inputs
-    predictions = self.model(features, training=False)
-    t_loss = loss_object(labels, predictions)
-    test_loss.update_state(labels, predictions) #(t_loss)
+    predictions = model(features, training=False)
+    t_loss = self.loss_object(labels, predictions)
+    self.val_loss.update_state(t_loss) #(labels, predictions)
 
   @tf.function
-  def distributed_train_step(dataset_inputs):
-    per_replica_losses = strategy.run(train_step, args=(dataset_inputs,))
+  def distributed_train_step(model, dataset_inputs, global_batch_size):
+    per_replica_losses = strategy.run(train_step, args=(model, dataset_inputs, global_batch_size))
     return strategy.reduce(tf.distribute.ReduceOp.SUM, per_replica_losses,
                            axis=None)
 
   @tf.function
-  def distributed_test_step(dataset_inputs):
-    return strategy.run(test_step, args=(dataset_inputs,))
+  def distributed_val_step(model, dataset_inputs, global_batch_size):
+    return strategy.run(val_step, args=(model, dataset_inputs, global_batch_size))
 
-  def fit(self, model, train_dataloader, val_dataloader):
-      with strategy.scope():
-        val_loss = tf.keras.metrics.Mean(name='val_loss')
-      
+  def fit(self, model, train_dataloader, val_dataloader, global_batch_size):
       for epoch in range(self.epochs):
         # Train Loop
         total_loss = 0.0
         num_batches = 0
         for x in train_data_loader:
-          total_loss += self.distributed_train_step(model, x)
+          total_loss += self.distributed_train_step(model, x, global_batch_size)
           num_batches += 1
         train_loss = total_loss / num_batches
         # Validation Loop
         for x in val_data_loader:
-          self.distributed_test_step(model, x)
+          self.distributed_val_step(model, x)
         val_loss.reset_states()
 
       if self.callbacks is not None:on
