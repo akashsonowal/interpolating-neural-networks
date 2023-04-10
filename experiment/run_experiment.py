@@ -9,7 +9,7 @@ from experiment import WandbCallBack, MLPDistributedTrainer
 from interpolating_neural_networks.data import FinancialDataset, DistributedDataLoader
 from interpolating_neural_networks.models import ExperimentalMLP
 
-strategy = tf.distribute.MirroredStrategy()
+
 
 random.seed(42)
 np.random.seed(42)
