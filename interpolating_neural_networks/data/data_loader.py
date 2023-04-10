@@ -12,7 +12,7 @@ class DistributedDataLoader:
     
     def tensor_slices(self, dataset, train):
         if train:
-            return tf.data.Dataset.from_tensor_slices(dataset).shuffle(len(train_dataset)).batch(self.global_bs)
+            return tf.data.Dataset.from_tensor_slices(dataset).shuffle(len(self.train_dataset)).batch(self.global_bs)
         return tf.data.Dataset.from_tensor_slices(dataset).batch(self.global_bs)
     
     def distribute_data(self, dataset):
