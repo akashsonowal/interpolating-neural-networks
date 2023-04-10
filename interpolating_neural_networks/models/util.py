@@ -1,3 +1,4 @@
+import tensorflow as tf
 from tensorflow.keras.layers import Input, Dense
 
 class BaseMLP(tf.keras.Model):
