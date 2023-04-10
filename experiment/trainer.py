@@ -61,6 +61,6 @@ class MLPDistributedTrainer:
           self.distributed_val_step(model, x)
         self.val_loss.reset_states()
 
-      if self.callbacks is not None:on
+      if self.callbacks is not None:
         for callback in self.callbacks:
           callback.on_train_end(logs={"train_loss": train_loss.numpy(), "val_loss": self.val_loss.numpy()})
