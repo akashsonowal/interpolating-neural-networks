@@ -7,6 +7,7 @@ import tensorflow as tf
 
 from experiment.util import WandbCallBack
 from interpolating_neural_networks.data import FinancialDataset, DistributedDataLoader
+from interpolating_neural_networks.models import ExperimentalMLP
 
 random.seed(42)
 np.random.seed(42)
