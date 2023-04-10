@@ -5,11 +5,10 @@ import random
 import numpy as np
 import tensorflow as tf
 
-from experiment import WandbCallBack, MLPDistributedTrainer
+from experiment.util import WandbCallBack, strategy
+from experiment.trainer import MLPDistributedTrainer
 from interpolating_neural_networks.data import FinancialDataset, DistributedDataLoader
 from interpolating_neural_networks.models import ExperimentalMLP
-
-from .util import strategy
 
 random.seed(42)
 np.random.seed(42)
