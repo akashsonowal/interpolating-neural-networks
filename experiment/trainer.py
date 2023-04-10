@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import tensorflow as tf
+from .run_experiment import strategy
 
 class MLPDistributedTrainer:
   def __init__(self, epochs, callbacks):
