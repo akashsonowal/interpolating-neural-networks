@@ -25,7 +25,7 @@ def get_args_parser():
     return parser.parse_args()
 
 def main(args):
-  data_dir = Path("../data/")
+  data_dir = Path("data/")
   strategy = tf.distribute.MirroredStrategy()
   print('Number of devices: {}'.format(strategy.num_replicas_in_sync))
 
