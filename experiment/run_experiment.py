@@ -37,7 +37,7 @@ def main(args):
   train_dataloader, val_dataloader =  DistributedDataLoader(train_dataset, 
                                                            val_dataset, 
                                                            batch_size=args.batch_size_per_replica, 
-                                                           num_workers=strategy.num_replicas_in_sync)
+                                                           num_workers=strategy.num_replicas_in_sync)()
 
   with strategy.scope():
     loss_object = tf.keras.losses.MeanSquaredError(reduction=tf.keras.losses.Reduction.NONE)
