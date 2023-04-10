@@ -8,7 +8,7 @@ class FinancialDataset:
         if linear:
             self.y = self.read_file(data_dir / f'r1_{input_dim}.csv')
         else:
-            self.y = self.yread_file(data_dir / f'r2_{input_dim}.csv')
+            self.y = self.read_file(data_dir / f'r2_{input_dim}.csv')
         x_train, x_val, y_train, y_val = train_test_split(self.x, 
                                                           self.y, 
                                                           test_size = train_val_split, 
