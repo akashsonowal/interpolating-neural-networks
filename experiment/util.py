@@ -3,6 +3,8 @@
 import wandb
 import tensorflow as tf
 
+strategy = tf.distribute.MirroredStrategy()
+
 class WandbCallBack(tf.keras.callbacks.Callback):
   def __init__(self, args):
       wandb.init(project="Interpolating NN Experiments", config=vars(args))
