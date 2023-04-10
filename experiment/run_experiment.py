@@ -4,7 +4,7 @@ from pathlib import Path
 import numpy as np
 import tensorflow as tf
 
-from .util import WandbCallBack
+from experiment.util import WandbCallBack
 from interpolating_neural_networks.data import FinancialDataset, DistributedDataLoder
 
 np.random_seed(42)
