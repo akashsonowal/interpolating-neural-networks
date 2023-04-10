@@ -52,12 +52,12 @@ class MLPDistributedTrainer:
         # Train Loop
         total_loss = 0.0
         num_batches = 0
-        for x in train_data_loader:
+        for x in train_dataloader:
           total_loss += self.distributed_train_step(model, x, global_batch_size)
           num_batches += 1
         train_loss = total_loss / num_batches
         # Validation Loop
-        for x in val_data_loader:
+        for x in val_dataloader:
           self.distributed_val_step(model, x)
         self.val_loss.reset_states()
 
