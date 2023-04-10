@@ -5,7 +5,7 @@ import numpy as np
 import tensorflow as tf
 
 from experiment.util import WandbCallBack
-from interpolating_neural_networks.data import FinancialDataset, DistributedDataLoder
+from interpolating_neural_networks.data import FinancialDataset, DistributedDataLoader
 
 np.random_seed(42)
 tf.random_set_seed(42)
@@ -32,7 +32,7 @@ def main(args):
                                                 input_dim=args.input_dim, 
                                                 linear=args.linear)()
 
-  train_dataloader, val_dataloader =  DistributedDataLoder(train_dataset, 
+  train_dataloader, val_dataloader =  DistributedDataLoader(train_dataset, 
                                                            val_dataset, 
                                                            batch_size=args.batch_size_per_replica, 
                                                            num_workers=strategy.num_replicas_in_sync)
