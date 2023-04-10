@@ -39,13 +39,13 @@ class MLPDistributedTrainer:
 
   @tf.function
   def distributed_train_step(model, dataset_inputs, global_batch_size):
-    per_replica_losses = strategy.run(train_step, args=(model, dataset_inputs, global_batch_size))
+    per_replica_losses = strategy.run(self.train_step, args=(model, dataset_inputs, global_batch_size))
     return strategy.reduce(tf.distribute.ReduceOp.SUM, per_replica_losses,
                            axis=None)
 
   @tf.function
   def distributed_val_step(model, dataset_inputs, global_batch_size):
-    return strategy.run(val_step, args=(model, dataset_inputs, global_batch_size))
+    return strategy.run(self.val_step, args=(model, dataset_inputs, global_batch_size))
 
   def fit(self, model, train_dataloader, val_dataloader, global_batch_size):
       for epoch in range(self.epochs):
