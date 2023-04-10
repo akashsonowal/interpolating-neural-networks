@@ -1,13 +1,15 @@
 import argparse
 from pathlib import Path
 
+import random
 import numpy as np
 import tensorflow as tf
 
 from experiment.util import WandbCallBack
 from interpolating_neural_networks.data import FinancialDataset, DistributedDataLoader
 
-np.random_seed(42)
+random.seed(42)
+np.random.seed(42)
 tf.random_set_seed(42)
 
 def get_args_parser():
