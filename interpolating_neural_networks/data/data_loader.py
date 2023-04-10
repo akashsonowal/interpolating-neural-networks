@@ -1,6 +1,5 @@
 import tensorflow as tf
-
-strategy = tf.distribute.MirroredStrategy()
+from experiment.util import strategy
 
 class DistributedDataLoader:
     def __init__(self, train_dataset, val_dataset, batch_size, num_workers):
