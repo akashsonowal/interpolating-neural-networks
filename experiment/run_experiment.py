@@ -10,7 +10,7 @@ from interpolating_neural_networks.data import FinancialDataset, DistributedData
 
 random.seed(42)
 np.random.seed(42)
-tf.random_set_seed(42)
+tf.random.set_seed(42)
 
 def get_args_parser():
     parser = argparse.ArgumentParser('Interpolating NN experiment setup')
