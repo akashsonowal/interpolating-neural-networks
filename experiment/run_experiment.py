@@ -36,7 +36,8 @@ def main(args):
                                                 input_dim=args.input_dim, 
                                                 linear=args.linear)()
 
-  train_dataloader, val_dataloader =  DistributedDataLoader(train_dataset, 
+  train_dataloader, val_dataloader =  DistributedDataLoader(strategy,
+                                                           train_dataset, 
                                                            val_dataset, 
                                                            batch_size=args.batch_size_per_replica, 
                                                            num_workers=strategy.num_replicas_in_sync)()
