@@ -28,7 +28,7 @@ def get_args_parser():
 
 def get_distributed_model(strategy, **kwargs):
     with strategy.scope():
-        model = ExperimentalMLP(strategy, input_dim=kwargs['input_dim'], depth=kwargs['depth'], width=kwargs['width'])
+        model = ExperimentalMLP(input_dim=kwargs['input_dim'], depth=kwargs['depth'], width=kwargs['width'])
     return model
     
 def main(args):
