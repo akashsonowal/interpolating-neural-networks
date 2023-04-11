@@ -43,21 +43,18 @@ def main(args):
                                                            num_workers=strategy.num_replicas_in_sync)()
   
   wandb_callbacks = WandbCallBack(args)
-
-#   with strategy.scope():
-#     loss_object = tf.keras.losses.MeanSquaredError(reduction=tf.keras.losses.Reduction.NONE)
     
-    if args.expt_type=='depth':
-      for depth in args.depths:
-          model = ExperimentalMLP(strategy, input_dim=args.input_dim, depth=depth, width=None)
-          trainer = MLPDistributedTrainer(strategy, epochs=args.epochs, callbacks=[wandb_callbacks])
-          trainer.fit(model, train_dataloader, val_dataloader, args.batch_size_per_replica * strategy.num_replicas_in_sync)
-else:
-  for width in args.widths:
-      model = ExperimentalMLP(strategy, input_dim=args.input_dim, depth=None, width=width)
-      trainer = MLPDistributedTrainer(strategy, epochs=args.epochs, callbacks=[wandb_callbacks])
-      trainer.fit(model, train_dataloader, val_dataloader, args.batch_size_per_replica * strategy.num_replicas_in_sync)
+  if args.expt_type=='depth':
+    for depth in args.depths:
+        model = ExperimentalMLP(strategy, input_dim=args.input_dim, depth=depth, width=None)
+        trainer = MLPDistributedTrainer(strategy, epochs=args.epochs, callbacks=[wandb_callbacks])
+        trainer.fit(model, train_dataloader, val_dataloader, args.batch_size_per_replica * strategy.num_replicas_in_sync)
+  else:
+    for width in args.widths:
+        model = ExperimentalMLP(strategy, input_dim=args.input_dim, depth=None, width=width)
+        trainer = MLPDistributedTrainer(strategy, epochs=args.epochs, callbacks=[wandb_callbacks])
+        trainer.fit(model, train_dataloader, val_dataloader, args.batch_size_per_replica * strategy.num_replicas_in_sync)
 
 if __name__ == '__main__':
-  args = get_args_parser()
-  main(args)
+    args = get_args_parser()
+    main(args)
