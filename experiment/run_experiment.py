@@ -26,6 +26,11 @@ def get_args_parser():
     parser.add_argument('--widths', default=[16, 32, 64], type=int, nargs='+', help='width of NNs for increasing width experiment (list of integers)')
     return parser.parse_args()
 
+def get_distributed_model(strategy, **kwargs):
+    with strategy.scope():
+        model = ExperimentalMLP(strategy, input_dim=kwargs['input_dim'], depth=kwargs['depth'], width=kwargs['width'])
+    return model
+    
 def main(args):
   data_dir = Path("data/")
   strategy = tf.distribute.MirroredStrategy()
@@ -46,12 +51,14 @@ def main(args):
     
   if args.expt_type=='depth':
     for depth in args.depths:
-        model = ExperimentalMLP(strategy, input_dim=args.input_dim, depth=depth, width=None)
+        model = get_distributed_model(strategy, input_dim=args.input_dim, depth=depth, width=None)
+#         model = ExperimentalMLP(strategy, input_dim=args.input_dim, depth=depth, width=None)
         trainer = MLPDistributedTrainer(strategy, epochs=args.epochs, callbacks=[wandb_callbacks])
         trainer.fit(model, train_dataloader, val_dataloader, args.batch_size_per_replica * strategy.num_replicas_in_sync)
   else:
     for width in args.widths:
-        model = ExperimentalMLP(strategy, input_dim=args.input_dim, depth=None, width=width)
+        model = get_distributed_model(strategy, input_dim=args.input_dim, depth=None, width=width)
+#         model = ExperimentalMLP(strategy, input_dim=args.input_dim, depth=None, width=width)
         trainer = MLPDistributedTrainer(strategy, epochs=args.epochs, callbacks=[wandb_callbacks])
         trainer.fit(model, train_dataloader, val_dataloader, args.batch_size_per_replica * strategy.num_replicas_in_sync)
 
