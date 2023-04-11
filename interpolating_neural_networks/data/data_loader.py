@@ -1,8 +1,8 @@
 import tensorflow as tf
-from experiment.util import strategy
 
 class DistributedDataLoader:
-    def __init__(self, train_dataset, val_dataset, batch_size, num_workers):
+    def __init__(self, strategy, train_dataset, val_dataset, batch_size, num_workers):
+        self.strategy = strategy
         self.global_bs = batch_size * num_workers
         self.buffer = len(train_dataset)
         self.train_dataset = self.tensor_slices(train_dataset, train=True)
@@ -16,7 +16,7 @@ class DistributedDataLoader:
         return tf.data.Dataset.from_tensor_slices(dataset).batch(self.global_bs)
     
     def distribute_data(self, dataset):
-        return strategy.experimental_distribute_dataset(dataset)
+        return self.strategy.experimental_distribute_dataset(dataset)
     
     def __call__(self):
         return self.train_dataloader, self.val_dataloader
