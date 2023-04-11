@@ -42,7 +42,7 @@ class MLPDistributedTrainer:
   @tf.function
   def distributed_train_step(model, dataset_inputs, global_batch_size):
     per_replica_losses = self.strategy.run(self.train_step, args=(model, dataset_inputs, global_batch_size))
-    return strategy.reduce(tf.distribute.ReduceOp.SUM, per_replica_losses,
+    return self.strategy.reduce(tf.distribute.ReduceOp.SUM, per_replica_losses,
                            axis=None)
 
   @tf.function
