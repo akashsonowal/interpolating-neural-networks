@@ -40,14 +40,15 @@ class MLPDistributedTrainer:
     self.val_loss.update_state(t_loss) #(labels, predictions)
 
   @tf.function
-  def distributed_train_step(dataset_inputs, global_batch_size, **kwargs):
+  def distributed_train_step(self, dataset_inputs, **kwargs):
     model = kwargs['model']
+    global_batch_size = kwargs['global_batch_size']
     per_replica_losses = self.strategy.run(self.train_step, args=(dataset_inputs, global_batch_size, model))
     return self.strategy.reduce(tf.distribute.ReduceOp.SUM, per_replica_losses,
                            axis=None)
 
   @tf.function
-  def distributed_val_step(dataset_inputs, **kwargs):
+  def distributed_val_step(self, dataset_inputs, **kwargs):
     model = kwargs['model']
     return self.strategy.run(self.val_step, args=(dataset_inputs, model))
 
@@ -57,7 +58,7 @@ class MLPDistributedTrainer:
         total_loss = 0.0
         num_batches = 0
         for dataset_inputs in train_dataloader:
-          total_loss += self.distributed_train_step(dataset_inputs, global_batch_size,model=model)
+          total_loss += self.distributed_train_step(dataset_inputs, global_batch_size=global_batch_size, model=model)
           num_batches += 1
         train_loss = total_loss / num_batches
         # Validation Loop
