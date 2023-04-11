@@ -41,10 +41,12 @@ def main(args):
                                                            val_dataset, 
                                                            batch_size=args.batch_size_per_replica, 
                                                            num_workers=strategy.num_replicas_in_sync)()
+  
+  wandb_callbacks = WandbCallBack(args)
 
   with strategy.scope():
-    loss_object = tf.keras.losses.MeanSquaredError(reduction=tf.keras.losses.Reduction.NONE)
-    wandb_callbacks = WandbCallBack(args)
+#     loss_object = tf.keras.losses.MeanSquaredError(reduction=tf.keras.losses.Reduction.NONE)
+    
     if args.expt_type=='depth':
       for depth in args.depths:
           model = ExperimentalMLP(input_dim=args.input_dim, depth=depth, width=None)
