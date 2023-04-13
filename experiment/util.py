@@ -5,7 +5,7 @@ import tensorflow as tf
 
 class WandbCallBack(tf.keras.callbacks.Callback):
   def __init__(self, args):
-      wandb.init(project="Interpolating NN Experiments", config=vars(args))
+#       wandb.init(project="Interpolating NN Experiments", config=vars(args))
       super(WandbCallBack, self).__init__()
   def on_train_end(self, logs={}):
       wandb.log(logs)
