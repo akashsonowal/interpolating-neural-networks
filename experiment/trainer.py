@@ -10,8 +10,8 @@ class MLPDistributedTrainer:
     with self.strategy.scope():
       self.loss_object = tf.keras.losses.MeanSquaredError(reduction=tf.keras.losses.Reduction.NONE)
       self.optimizer = tf.keras.optimizers.Adam()
-      self.train_loss = tf.keras.metrics.MeanSquaredError(name='train_loss')
-      self.val_loss = tf.keras.metrics.MeanSquaredError(name='val_loss')
+      self.train_loss_metric = tf.keras.metrics.MeanSquaredError(name='train_loss_metric')
+      self.val_loss_metric = tf.keras.metrics.MeanSquaredError(name='val_loss_metric')
     
   def _compute_loss(self, labels, predictions, model_losses, global_batch_size):
     with self.strategy.scope():
@@ -30,22 +30,21 @@ class MLPDistributedTrainer:
 
     gradients = tape.gradient(loss, model.trainable_variables)
     self.optimizer.apply_gradients(zip(gradients, model.trainable_variables))
-    self.train_loss.update_state(labels, predictions)
+    self.train_loss_metric.update_state(labels, predictions)
     return loss 
   
   def val_step(self, dataset_inputs, model):
     features, labels = dataset_inputs
     predictions = model(features, training=False)
     t_loss = self.loss_object(labels, predictions)
-    self.val_loss.update_state(t_loss) #(labels, predictions)
+    self.val_loss_metric.update_state(t_loss) #(labels, predictions)
 
   @tf.function
   def distributed_train_step(self, dataset_inputs, **kwargs):
     model = kwargs['model']
     global_batch_size = kwargs['global_batch_size']
     per_replica_losses = self.strategy.run(self.train_step, args=(dataset_inputs, global_batch_size, model))
-    return self.strategy.reduce(tf.distribute.ReduceOp.SUM, per_replica_losses,
-                           axis=None)
+    return self.strategy.reduce(tf.distribute.ReduceOp.SUM, per_replica_losses, axis=None)
 
   @tf.function
   def distributed_val_step(self, dataset_inputs, **kwargs):
@@ -64,7 +63,7 @@ class MLPDistributedTrainer:
         # Validation Loop
         for dataset_inputs in val_dataloader:
           self.distributed_val_step(dataset_inputs, model=model)
-        self.val_loss.reset_states()
+        self.val_loss_metric.reset_states()
 
       if self.callbacks is not None:
         for callback in self.callbacks:
