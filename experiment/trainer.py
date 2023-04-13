@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 import tensorflow as tf
 
+#https://github.com/anhtuan85/TensorFlow-Advanced-Techniques-Specialization/blob/main/Course%202%20-%20Custom%20and%20Distributed%20Training%20with%20TensorFlow/Week%204/C2W4_Assignment.ipynb
+
 class MLPDistributedTrainer:
   def __init__(self, strategy, epochs, callbacks):
     self.strategy = strategy
@@ -9,18 +11,26 @@ class MLPDistributedTrainer:
     
     with self.strategy.scope():
       self.loss_object = tf.keras.losses.MeanSquaredError(reduction=tf.keras.losses.Reduction.NONE)
+      
+      def _compute_loss(self, labels, predictions, model_losses, global_batch_size):
+        per_example_loss = self.loss_object(labels, predictions)
+        loss = tf.nn.compute_average_loss(per_example_loss,
+                                          global_batch_size=global_batch_size)
+        if model_losses:
+          loss += tf.nn.scale_regularization_loss(tf.add_n(model_losses))
+        return loss
       self.optimizer = tf.keras.optimizers.Adam()
       self.train_loss_metric = tf.keras.metrics.MeanSquaredError(name='train_loss_metric')
       self.val_loss_metric = tf.keras.metrics.MeanSquaredError(name='val_loss_metric')
     
-  def _compute_loss(self, labels, predictions, model_losses, global_batch_size):
-    with self.strategy.scope():
-      per_example_loss = self.loss_object(labels, predictions)
-      loss = tf.nn.compute_average_loss(per_example_loss,
-                                        global_batch_size=global_batch_size)
-      if model_losses:
-        loss += tf.nn.scale_regularization_loss(tf.add_n(model_losses))
-      return loss
+#   def _compute_loss(self, labels, predictions, model_losses, global_batch_size):
+#     with self.strategy.scope():
+#       per_example_loss = self.loss_object(labels, predictions)
+#       loss = tf.nn.compute_average_loss(per_example_loss,
+#                                         global_batch_size=global_batch_size)
+#       if model_losses:
+#         loss += tf.nn.scale_regularization_loss(tf.add_n(model_losses))
+#       return loss
     
   def train_step(self, dataset_inputs, global_batch_size, model):
     features, labels = dataset_inputs
