@@ -14,7 +14,6 @@ class MLPDistributedTrainer:
       self.train_loss_metric = tf.keras.metrics.MeanSquaredError(name='train_loss_metric')
       self.val_loss_metric = tf.keras.metrics.MeanSquaredError(name='val_loss_metric')
   
-
   def _compute_loss(self, labels, predictions, model_losses, global_batch_size):
       per_example_loss = self.loss_object(labels, predictions)
       loss = tf.nn.compute_average_loss(per_example_loss,
@@ -68,4 +67,4 @@ class MLPDistributedTrainer:
 
       if self.callbacks is not None:
         for callback in self.callbacks:
-          callback.on_train_end(logs={"train_loss": train_loss.numpy(), "val_loss": self.val_loss_metric.numpy()})
+          callback.on_train_end(logs={"train_loss": train_loss.numpy(), "val_loss": self.val_loss_metric})
