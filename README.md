@@ -1,4 +1,4 @@
-# interpolating-neural-networks (wip)
+# tensorflow-interpolating-neural-networks
 This repo contains the source code for observing double descent phenomena with neural networks in empirical asset pricing data.
 
 ## Usage
