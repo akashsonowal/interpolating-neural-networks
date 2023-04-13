@@ -9,26 +9,18 @@ class MLPDistributedTrainer:
     
     with self.strategy.scope():
       self.loss_object = tf.keras.losses.MeanSquaredError(reduction=tf.keras.losses.Reduction.NONE)
-      
-      def _compute_loss(self, labels, predictions, model_losses, global_batch_size):
-        per_example_loss = self.loss_object(labels, predictions)
-        loss = tf.nn.compute_average_loss(per_example_loss,
-                                          global_batch_size=global_batch_size)
-        if model_losses:
-          loss += tf.nn.scale_regularization_loss(tf.add_n(model_losses))
-        return loss
       self.optimizer = tf.keras.optimizers.Adam()
       self.train_loss_metric = tf.keras.metrics.MeanSquaredError(name='train_loss_metric')
       self.val_loss_metric = tf.keras.metrics.MeanSquaredError(name='val_loss_metric')
-    
-#   def _compute_loss(self, labels, predictions, model_losses, global_batch_size):
-#     with self.strategy.scope():
-#       per_example_loss = self.loss_object(labels, predictions)
-#       loss = tf.nn.compute_average_loss(per_example_loss,
-#                                         global_batch_size=global_batch_size)
-#       if model_losses:
-#         loss += tf.nn.scale_regularization_loss(tf.add_n(model_losses))
-#       return loss
+  
+  with self.strategy.scope():
+    def _compute_loss(self, labels, predictions, model_losses, global_batch_size):
+      per_example_loss = self.loss_object(labels, predictions)
+      loss = tf.nn.compute_average_loss(per_example_loss,
+                                        global_batch_size=global_batch_size)
+      if model_losses:
+        loss += tf.nn.scale_regularization_loss(tf.add_n(model_losses))
+      return loss
     
   def train_step(self, dataset_inputs, global_batch_size, model):
     features, labels = dataset_inputs
