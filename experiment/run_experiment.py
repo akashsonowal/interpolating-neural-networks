@@ -5,8 +5,8 @@ import random
 import numpy as np
 import tensorflow as tf
 
-from experiment.util import WandbCallBack
-from experiment.trainer import MLPDistributedTrainer
+from .util import WandbCallBack
+from .trainer import MLPDistributedTrainer
 from interpolating_neural_networks.data import FinancialDataset, DistributedDataLoader
 from interpolating_neural_networks.models import ExperimentalMLP
 
