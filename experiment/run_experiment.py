@@ -4,7 +4,7 @@ from pathlib import Path
 import random
 import numpy as np
 import tensorflow as tf
-# import wandb
+import wandb
 
 from experiment.util import WandbCallBack
 from experiment.trainer import MLPDistributedTrainer
@@ -48,7 +48,7 @@ def main(args):
                                                            batch_size=args.batch_size_per_replica, 
                                                            num_workers=strategy.num_replicas_in_sync)()
   
-#   wandb.init(project="Interpolating NN Experiments", config=vars(args))
+  wandb.init(project="Interpolating NN Experiments", config=vars(args))
   wandb_callbacks = WandbCallBack()
     
   if args.expt_type=='depth':
