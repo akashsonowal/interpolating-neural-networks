@@ -54,13 +54,11 @@ def main(args):
   if args.expt_type=='depth':
     for depth in args.depths:
         model = get_distributed_model(strategy, input_dim=args.input_dim, depth=depth, width=None)
-#         model = ExperimentalMLP(strategy, input_dim=args.input_dim, depth=depth, width=None)
         trainer = MLPDistributedTrainer(strategy, epochs=args.epochs, callbacks=[wandb_callbacks])
         trainer.fit(model, train_dataloader, val_dataloader, args.batch_size_per_replica * strategy.num_replicas_in_sync)
   else:
     for width in args.widths:
         model = get_distributed_model(strategy, input_dim=args.input_dim, depth=None, width=width)
-#         model = ExperimentalMLP(strategy, input_dim=args.input_dim, depth=None, width=width)
         trainer = MLPDistributedTrainer(strategy, epochs=args.epochs, callbacks=[wandb_callbacks])
         trainer.fit(model, train_dataloader, val_dataloader, args.batch_size_per_replica * strategy.num_replicas_in_sync)
 
