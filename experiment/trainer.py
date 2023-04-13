@@ -14,7 +14,8 @@ class MLPDistributedTrainer:
       self.val_loss_metric = tf.keras.metrics.MeanSquaredError(name='val_loss_metric')
     
   def _compute_loss(self, labels, predictions, model_losses, global_batch_size):
-    with self.strategy.scope():
+    context = tf.distribute.get_replica_context()
+    with context.scope():
       per_example_loss = self.loss_object(labels, predictions)
       loss = tf.nn.compute_average_loss(per_example_loss,
                                         global_batch_size=global_batch_size)
