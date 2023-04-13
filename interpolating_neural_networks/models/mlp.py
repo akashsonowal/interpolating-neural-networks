@@ -1,8 +1,6 @@
 import tensorflow as tf
 from tensorflow.keras.layers import Dense
 from .util import BaseMLP
-
-# model = ExperimentalMLP(input_dim=args.input_dim, depth=depth, width=None)
     
 class ExperimentalMLP(BaseMLP):
   def __init__(self, **kwargs):
