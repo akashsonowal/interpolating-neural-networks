@@ -4,8 +4,7 @@ import wandb
 import tensorflow as tf
 
 class WandbCallBack(tf.keras.callbacks.Callback):
-  def __init__(self, args):
-#       wandb.init(project="Interpolating NN Experiments", config=vars(args))
+  def __init__(self):
       super(WandbCallBack, self).__init__()
   def on_train_end(self, logs={}):
       wandb.log(logs)
