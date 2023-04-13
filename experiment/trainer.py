@@ -63,8 +63,9 @@ class MLPDistributedTrainer:
         # Validation Loop
         for dataset_inputs in val_dataloader:
           self.distributed_val_step(dataset_inputs, model=model)
+        val_loss = self.val_loss_metric.result()
         self.val_loss_metric.reset_states()
 
       if self.callbacks is not None:
         for callback in self.callbacks:
-          callback.on_train_end(logs={"train_loss": train_loss.numpy(), "val_loss": self.val_loss_metric.result().numpy()})
+          callback.on_train_end(logs={"train_loss": train_loss.numpy(), "val_loss": val_loss.numpy()})
