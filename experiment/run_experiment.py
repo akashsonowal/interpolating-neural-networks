@@ -6,7 +6,7 @@ import numpy as np
 import tensorflow as tf
 import wandb
 
-from .util import WandbCallBack
+from experiment.util import WandbCallBack
 from .trainer import MLPDistributedTrainer
 from interpolating_neural_networks.data import FinancialDataset, DistributedDataLoader
 from interpolating_neural_networks.models import ExperimentalMLP
@@ -20,7 +20,7 @@ def get_args_parser():
     parser.add_argument('--train_val_split', default=1/3, type=float, help='train val split ratio')
     parser.add_argument('--batch_size_per_replica', default=32, type=int, help='batch size of training on a single GPU')
     parser.add_argument('--epochs', default=15, type=int, help='training epochs')
-    parser.add_argument('--input_dim', default=100, type=int, help='input feature set size')
+    parser.add_argument('--input_dim', default=50, type=int, help='input feature set size')
     parser.add_argument('--linear', default=False, const=False, nargs='?', choices=[False, True], help='linear pattern in data')
     parser.add_argument('--expt_type', default='depth', const='depth', nargs='?', choices=['depth', 'width'], help='experiment type')
     parser.add_argument('--depths', default=[5, 10, 15], type=int, nargs='+', help='depth of NNs for increasing depth experiment (list of integers)')
