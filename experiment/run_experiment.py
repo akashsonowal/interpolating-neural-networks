@@ -7,7 +7,7 @@ import tensorflow as tf
 import wandb
 
 from experiment.util import WandbCallBack
-from .trainer import MLPDistributedTrainer
+from experiment.trainer import MLPDistributedTrainer
 from interpolating_neural_networks.data import FinancialDataset, DistributedDataLoader
 from interpolating_neural_networks.models import ExperimentalMLP
 
