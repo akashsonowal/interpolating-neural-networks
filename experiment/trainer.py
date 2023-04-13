@@ -2,6 +2,7 @@
 import tensorflow as tf
 
 #https://github.com/anhtuan85/TensorFlow-Advanced-Techniques-Specialization/blob/main/Course%202%20-%20Custom%20and%20Distributed%20Training%20with%20TensorFlow/Week%204/C2W4_Assignment.ipynb
+#https://github.com/y33-j3T/Coursera-Deep-Learning/blob/master/Custom%20and%20Distributed%20Training%20with%20Tensorflow/Week%204%20-%20Distributed%20Training/C2W4_Assignment.ipynb
 
 class MLPDistributedTrainer:
   def __init__(self, strategy, epochs, callbacks):
