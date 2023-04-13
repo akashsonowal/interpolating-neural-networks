@@ -7,6 +7,12 @@ setup(
   license = 'MIT',
   author = 'Akash Sonowal',
   author_email = 'work.akashsonowal@gmail.com',
-  url = 'https://github.com/akashsonowal/interpolating-neural-networks/'
+  url = 'https://github.com/akashsonowal/interpolating-neural-networks/',
+  keywords = [
+  ],
+  install_requires = [
+  ],
+  classifiers = [
+  ],
 )
   
