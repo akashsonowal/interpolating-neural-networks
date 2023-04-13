@@ -9,13 +9,13 @@ class MLPDistributedTrainer:
     
     with self.strategy.scope():
       self.loss_object = tf.keras.losses.MeanSquaredError(reduction=tf.keras.losses.Reduction.NONE)
+      self.compute_loss = self._compute_loss
       self.optimizer = tf.keras.optimizers.Adam()
       self.train_loss_metric = tf.keras.metrics.MeanSquaredError(name='train_loss_metric')
       self.val_loss_metric = tf.keras.metrics.MeanSquaredError(name='val_loss_metric')
   
 
   def _compute_loss(self, labels, predictions, model_losses, global_batch_size):
-    with self.strategy.scope():
       per_example_loss = self.loss_object(labels, predictions)
       loss = tf.nn.compute_average_loss(per_example_loss,
                                         global_batch_size=global_batch_size)
@@ -27,7 +27,7 @@ class MLPDistributedTrainer:
     features, labels = dataset_inputs
     with tf.GradientTape() as tape:
       predictions = model(features, training=True)
-      loss = self._compute_loss(labels, predictions, model.losses, global_batch_size)
+      loss = self.compute_loss(labels, predictions, model.losses, global_batch_size)
 
     gradients = tape.gradient(loss, model.trainable_variables)
     self.optimizer.apply_gradients(zip(gradients, model.trainable_variables))
