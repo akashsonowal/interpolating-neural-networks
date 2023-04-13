@@ -38,7 +38,7 @@ class MLPDistributedTrainer:
     features, labels = dataset_inputs
     predictions = model(features, training=False)
     t_loss = self.loss_object(labels, predictions)
-    self.val_loss_metric.update_state(t_loss) #(labels, predictions)
+    self.val_loss_metric.update_state(labels, predictions)
 
   @tf.function
   def distributed_train_step(self, dataset_inputs, **kwargs):
