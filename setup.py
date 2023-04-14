@@ -13,6 +13,10 @@ setup(
   install_requires = [
   ],
   classifiers = [
+          "Development Status :: 4 - Beta",
+          "Intended Audience :: Science/Research",
+          "Operating System :: OS Independent",
+          "Programming Language :: Python :: 3.8",
+          "Topic :: Science/Engineering :: Artificial Intelligence",            
   ],
 )
-  
