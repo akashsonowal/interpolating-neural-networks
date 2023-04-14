@@ -8,7 +8,7 @@ setup(
   author = 'Akash Sonowal',
   author_email = 'work.akashsonowal@gmail.com',
   url = 'https://github.com/akashsonowal/interpolating-neural-networks/',
-  keywords = ["deep learning", "generalization", "asset pricing"],
+  keywords = ["double descent", "deep learning", "generalization", "asset pricing"],
   install_requires = [
   ],
   classifiers = [
