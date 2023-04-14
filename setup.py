@@ -1,5 +1,7 @@
 from setuptools import setup, find_packages
 
+test_packages = ["pytest==7.1.2"]
+
 setup(
   name = 'interpolating-neural-networks',
   packages = find_packages(exclude=['examples']),
@@ -11,6 +13,7 @@ setup(
   keywords = ["double descent", "deep learning", "generalization", "asset pricing"],
   install_requires = [
   ],
+  extra_requires = {"test": test_packages},
   classifiers = [
           "Development Status :: 4 - Beta",
           "Intended Audience :: Science/Research",
