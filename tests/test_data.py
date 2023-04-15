@@ -8,23 +8,19 @@ def strategy():
 
 @pytest.fixture
 def train_dataset():
-    return tf.data.Dataset.from_tensor_slices(tf.random.uniform((1000, 10)))
+    return tf.random.uniform((1000, 10))
 
 @pytest.fixture
 def val_dataset():
-    return tf.data.Dataset.from_tensor_slices(tf.random.uniform((100, 10)))
+    return tf.random.uniform((100, 10))
 
 @pytest.fixture
 def dataloader(strategy, train_dataset, val_dataset):
-    print(train_dataset)
-    print(val_dataset)
     return DistributedDataLoader(strategy, train_dataset, val_dataset, batch_size=10, num_workers=1)
 
 def test_dataloader_shape(dataloader):
     train_dataloader, val_dataloader = dataloader()
     for x in train_dataloader:
-        print(x)
-#         assert x.shape == (10, 10)
+        assert x.shape == (10, 10)
     for x in val_dataloader:
-        print(x)
-#         assert x.shape == (10, 10)
+        assert x.shape == (10, 10)
