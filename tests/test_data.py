@@ -4,19 +4,21 @@ from pathlib import Path
 import tensorflow as tf
 import logging
 from interpolating_neural_networks.data import FinancialDataset, DistributedDataLoader
-
-@pytest.mark.parametrize("filepath, exists",
-                             [
-                                 ("c_50.csv", True),
-                                 ("c_200.csv", False),
-                              ]
-                        )
+                                            
 @pytest.fixture
-def data_dir():
-    return Path('data')
+def dataset():
+   return FinancialDataset(data_dir=Path('data'), train_val_split=1/3, input_dim=50, linear=False)  
 
 class TestFinancialDataset:
-    def test_data_exists(self, filepath, exists):
+     @pytest.mark.parametrize("filepath, exists_ok", [ ("c_50.csv", True), ("r2_50.csv", True) ])
+                                                     
+     def test_data_exists(self, filepath, exists_ok):
+         assert set(os.listdir(tmp_path)) == {"train.bin", "tokenizer.model", "tokenizer.vocab", "input.txt", "val.bin"}
+      
+        dataset = FinancialDataset(data_dir, train_val_split, input_dim, linear)                                   
+        
+        
+    def test_data_exists(self, filepath, exists_ok):
         if (data_dir / filepath).exists():
             logging.info(f'{filepath} exists')
         elif not (data_dir / filepath).exists():
