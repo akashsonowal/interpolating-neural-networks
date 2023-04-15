@@ -21,7 +21,8 @@ In this work, we try to observe double descent phenomena in empirical asset pric
 $ pip install interpolating-neural-networks
 ```
 
-## Notes on the training arhitecture applied in this work:
+## Notes:
+
 - There are no regularization terms like weight decay, dropout.
 - Each network is trained for a long time to achieve near-zero training risk. The learning rate is adjusted differently for models of different sizes.
 
