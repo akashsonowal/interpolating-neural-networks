@@ -11,9 +11,10 @@ As [Belkin et al.]() claimed that it is likely due to two reasons:
 - The number of parameters is not a good measure of inductive bias, defined as the set of assumptions of a learning algorithm used to predict for unknown samples. 
 - Equipped with a larger model, we might be able to discover larger function classes and further find interpolating functions that have smaller norm and are thus “simpler”.
 
-Others explanations of better generalisation are Smaller Intrinsic Dimension, Heterogeneous Layer Robutness, Lottery Ticket Hypothesis. To read more on the explanations, refer Lilian Weng's [blogpost](https://lilianweng.github.io/posts/2019-03-14-overfit/#intrinsic-dimension)
+Others explanations of better generalisation are Smaller Intrinsic Dimension, Heterogeneous Layer Robutness, Lottery Ticket Hypothesis. To read more on them in detail, refer Lilian Weng's [article](https://lilianweng.github.io/posts/2019-03-14-overfit/#intrinsic-dimension).
 
 ## Usage
+In this work, we try to observe double descent phenomena in empirical asset pricing. The observation of double descent is fascinating as financial data are very noisy in comparison to image datasets which have good signal to noise ratio.
 ```
 $ pip install interpolating-neural-networks
 ```
