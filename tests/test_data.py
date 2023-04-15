@@ -16,6 +16,8 @@ def val_dataset():
 
 @pytest.fixture
 def dataloader(strategy, train_dataset, val_dataset):
+    print(train_dataset)
+    print(val_dataset)
     return DistributedDataLoader(strategy, train_dataset, val_dataset, batch_size=10, num_workers=1)
 
 def test_dataloader_shape(dataloader):
