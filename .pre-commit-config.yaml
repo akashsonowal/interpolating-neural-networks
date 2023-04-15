@@ -12,7 +12,6 @@ repos:
     -   id: check-added-large-files
         args: ['--maxkb=1000']
         exclude: "notebooks"
-    -   id: check-ast
     -   id: check-merge-conflict
     -   id: detect-private-key
 -   repo: https://github.com/psf/black
