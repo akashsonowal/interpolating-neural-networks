@@ -8,8 +8,8 @@ style:
 # Environment
 .ONESHELL:
 venv:
-	python3 -m venv venv
-	source venv/bin/activate && \
+	conda create --name inn python=3.8 \
+	conda activate inn && \
 	python3 -m pip install --upgrade pip setuptools wheel && \
 	python3 -m pip install -e ".[dev]" && \
 	pre-commit install && \
