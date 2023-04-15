@@ -8,8 +8,10 @@ Fig. A new double-U-shaped bias-variance risk curve for deep neural networks. (I
 Deep learning models are heavily over-parameterized and can often get to perfect results on training data. In the traditional view, like bias-variance trade-offs, this could be a disaster that nothing may generalize to the unseen test data. However, as is often the case, such “overfitted” (training error = 0) deep learning models still present a decent performance on out-of-sample test data. 
 
 As [Belkin et al.]() claimed that it is likely due to two reasons:
-- The number of parameters is not a good measure of inductive bias, defined as the set of assumptions of a learning algorithm used to predict for unknown samples. See more discussion on DL model complexity in later sections.
+- The number of parameters is not a good measure of inductive bias, defined as the set of assumptions of a learning algorithm used to predict for unknown samples. 
 - Equipped with a larger model, we might be able to discover larger function classes and further find interpolating functions that have smaller norm and are thus “simpler”.
+
+Others explanations of better generalisation are Smaller Intrinsic Dimension, Heterogeneous Layer Robutness, Lottery Ticket Hypothesis. To read more on the explanations, refer Lilian Weng's [blogpost](https://lilianweng.github.io/posts/2019-03-14-overfit/#intrinsic-dimension)
 
 ## Usage
 ```
