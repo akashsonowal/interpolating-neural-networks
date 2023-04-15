@@ -11,7 +11,7 @@ def test_folder_contains_files():
 def strategy():
     return tf.distribute.OneDeviceStrategy(device='/cpu:0')
 
-train_datset, val_dataset = FinancialDataset(Path('data'), train_val_split=1/3, input_dim=50, linear=False)()
+train_dataset, val_dataset = FinancialDataset(Path('data'), train_val_split=1/3, input_dim=50, linear=False)()
 
 @pytest.fixture
 def dataloader(strategy, train_dataset, val_dataset):
