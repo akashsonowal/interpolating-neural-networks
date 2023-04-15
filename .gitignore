@@ -1,3 +1,6 @@
+# Byte-compiled / Optimized / DLL files
+__pycache__/
+
 # Distribution / packaging
 *.egg-info/
 MANIFEST
