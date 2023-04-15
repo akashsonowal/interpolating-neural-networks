@@ -1,6 +1,6 @@
 # Interpolating Neural Networks
 
-This repo contains the source code for observing **double descent** phenomena with neural networks in empirical asset pricing data.
+This repo contains the source code for observing **double descent** phenomena with neural networks in **empirical asset pricing data**.
 
 ![dd_curve](assets/new-bias-variance-risk-curve.png)
 
