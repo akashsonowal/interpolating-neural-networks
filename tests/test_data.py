@@ -7,9 +7,9 @@ from interpolating_neural_networks.data import FinancialDataset, DistributedData
 def test_folder_contains_files():
     assert all(Path('data').joinpath(file_name).is_file() for file_name in ['c_50.csv', 'r2_50.csv'])
 
-@pytest.fixture
-def dataset():
-    return FinancialDataset(Path('data'), train_val_split=1/3, input_dim=50, linear=False)
+def get_dataset():
+    train_datset, val_dataset = FinancialDataset(Path('data'), train_val_split=1/3, input_dim=50, linear=False)()
+    return train_dataset, val_dataset 
     
 @pytest.fixture
 def strategy():
@@ -17,11 +17,11 @@ def strategy():
 
 @pytest.fixture
 def train_dataset():
-    return dataset()[0]
+    return get_dataset()[0]
 
 @pytest.fixture
 def val_dataset():
-    return dataset()[1]
+    return get_dataset()[1]
 
 @pytest.fixture
 def dataloader(strategy, train_dataset, val_dataset):
