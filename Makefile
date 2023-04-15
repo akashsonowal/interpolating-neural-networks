@@ -1,3 +1,4 @@
+# Test
 .PHONY: test
 test:
-    pytest -m "not training"
+	    pytest -m "not training"
