@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-test_packages = ["pytest==7.1.2"]
+test_packages = ["pytest==7.1.2", "pytest-cov==2.10.1"]
 
 setup(
   name = 'interpolating-neural-networks',
