@@ -61,6 +61,8 @@ def main(args):
         model = get_distributed_model(strategy, input_dim=args.input_dim, depth=None, width=width)
         trainer = MLPDistributedTrainer(strategy, epochs=args.epochs, callbacks=[wandb_callbacks])
         trainer.fit(model, train_dataloader, val_dataloader, args.batch_size_per_replica * strategy.num_replicas_in_sync)
+        
+  wandb.finish()
 
 if __name__ == '__main__':
     args = get_args_parser()
