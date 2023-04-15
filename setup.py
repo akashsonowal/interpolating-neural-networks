@@ -20,7 +20,7 @@ setup(
   keywords = ["double descent", "deep learning", "generalization", "asset pricing"],
   python_requires=">=3.8",
   install_requires = [required_packages],
-  extra_requires = {
+  extras_require = {
       "dev": test_packages + style_packages + ["pre-commit==2.19.0"],
       "test": test_packages
   },
