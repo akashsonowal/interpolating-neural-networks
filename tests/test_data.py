@@ -8,8 +8,10 @@ from interpolating_neural_networks.data import FinancialDataset, DistributedData
 def financial_dataset(request) -> FinancialDataset:
     data_dir = Path('data')
     train_val_split = request.param.get('train_val_split')
+    input_dim = request.param.get('input_dim')
+    linear = input.param.get('linear')
+    return FinancialDataset(data_dir, train_val_split, input_dim, linear)
     
-
 @pytest.fixture
 def strategy():
     return tf.distribute.OneDeviceStrategy(device='/cpu:0')
