@@ -1,6 +1,18 @@
 # interpolating-neural-networks
 This repo contains the source code for observing double descent phenomena with neural networks in empirical asset pricing data.
 
+What is Deep Double Descent?
+
+Double descent phenomenon is when we increase the model size or number of training epochs, the performance first improves, then gets worse, and then improves again.
+
+It has been shown in this paper by OpenAI (https://lnkd.in/dfpAeNbP) that the “double descent” phenomenon occurs in deep neural networks like CNNs, transformers etc.
+
+According to the bias-variance trade-off in classical statistical learning theory, once the model complexity crosses a certain threshold, the model starts to overfit. It means if we increase the model complexity now, it will only increase the test error. Thus, after crossing a certain threshold, “large models are worse”.
+
+This double descent challenges this conventional wisdom.
+
+Key point: Because of the double descent, sufficiently large models undergo this behaviour where the test error first decreases then increases near the threshold(interpolation threshold - term used in the paper), and then decreases again.
+
 ## Usage
 ```
 $ pip install interpolating-neural-networks
