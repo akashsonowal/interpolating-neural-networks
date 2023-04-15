@@ -18,7 +18,7 @@ class FinancialDataset:
         self.val_dataset = (x_val, y_val)
 
     def _read_file(self, filepath):
-        return pd.read_csv(filepath, header=None).sample(100)
+        return pd.read_csv(filepath, header=None)
 
     def __len__(self):
         return len(self.x)
