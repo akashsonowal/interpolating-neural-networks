@@ -1,6 +1,6 @@
 import pytest
 import tensorflow as tf
-from mlp_trainer import MLPDistributedTrainer
+from experiment import MLPDistributedTrainer
 
 @pytest.fixture
 def strategy():
@@ -12,7 +12,6 @@ def trainer(strategy):
 
 @pytest.fixture
 def dataset():
-    # Create a simple dataset for testing purposes
     x = tf.constant([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]])
     y = tf.constant([3, 7, 11, 15, 19])
     dataset = tf.data.Dataset.from_tensor_slices((x, y)).batch(2)
@@ -20,7 +19,6 @@ def dataset():
 
 @pytest.fixture
 def model():
-    # Create a simple MLP model for testing purposes
     model = tf.keras.Sequential([
         tf.keras.layers.Dense(64, activation='relu'),
         tf.keras.layers.Dense(1)
