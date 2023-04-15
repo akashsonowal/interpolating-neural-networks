@@ -19,7 +19,7 @@ setup(
     author_email="work.akashsonowal@gmail.com",
     url="https://github.com/akashsonowal/interpolating-neural-networks/",
     description="Interpolating Neural Networks in Asset Pricing Data. Supports Distributed Training in TensorFlow.",
-    long_description=open("README.md", encoding="utf-8").read(),
+    long_description=open("readme.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     readme="README.md",
     keywords=["double descent", "deep learning", "generalization", "asset pricing"],
