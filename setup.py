@@ -21,7 +21,7 @@ setup(
     description="Interpolating Neural Networks in Asset Pricing Data. Supports Distributed Training in TensorFlow.",
     long_description=open("readme.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
-    readme="README.md",
+    readme="readme.md",
     keywords=["double descent", "deep learning", "generalization", "asset pricing"],
     python_requires=">=3.8",
     install_requires=[required_packages],
