@@ -14,7 +14,7 @@ def financial_dataset(request) -> FinancialDataset:
 
 @pytest.mark.skipif(not Path('data').exists(), reason='Missing data directory')
 class TestFinancialDataset:
-    @pytest.mark.parameterize("filepath, expected_shape", [
+    @pytest.mark.parametrize("filepath, expected_shape", [
         ("c_50.csv", (100, 100))
     ])
     def test_read_file(financial_dataset, filepath, expected_shape):
