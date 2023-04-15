@@ -1,5 +1,6 @@
 from setuptools import setup, find_packages
 
+style_packages = ["black==22.3.0", "flake8==3.9.2", "isort==5.10.1"]
 test_packages = ["pytest==7.1.2"]
 
 setup(
@@ -13,7 +14,7 @@ setup(
   keywords = ["double descent", "deep learning", "generalization", "asset pricing"],
   install_requires = [
   ],
-  extra_requires = {"test": test_packages},
+  extra_requires = {"dev": style_packages, "test": test_packages},
   classifiers = [
           "Development Status :: 4 - Beta",
           "Intended Audience :: Science/Research",
