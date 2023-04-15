@@ -1,20 +1,15 @@
 # Interpolating Neural Networks
 
-This repo contains the source code for observing **double descent** phenomena with neural networks in **empirical asset pricing data**.
+This repo contains the source code for observing **double descent** phenomena with neural networks in **empirical asset pricing data**. 
 
 ![dd_curve](assets/new-bias-variance-risk-curve.png)
+Fig. A new double-U-shaped bias-variance risk curve for deep neural networks. (Image source: original paper)
 
-What is Deep Double Descent?
+Deep learning models are heavily over-parameterized and can often get to perfect results on training data. In the traditional view, like bias-variance trade-offs, this could be a disaster that nothing may generalize to the unseen test data. However, as is often the case, such “overfitted” (training error = 0) deep learning models still present a decent performance on out-of-sample test data. 
 
-Double descent phenomenon is when we increase the model size or number of training epochs, the performance first improves, then gets worse, and then improves again.
-
-It has been shown in this paper by OpenAI (https://lnkd.in/dfpAeNbP) that the “double descent” phenomenon occurs in deep neural networks like CNNs, transformers etc.
-
-According to the bias-variance trade-off in classical statistical learning theory, once the model complexity crosses a certain threshold, the model starts to overfit. It means if we increase the model complexity now, it will only increase the test error. Thus, after crossing a certain threshold, “large models are worse”.
-
-This double descent challenges this conventional wisdom.
-
-Key point: Because of the double descent, sufficiently large models undergo this behaviour where the test error first decreases then increases near the threshold (interpolation threshold - term used in the paper), and then decreases again.
+As [Belkin et al.]() claimed that it is likely due to two reasons:
+- The number of parameters is not a good measure of inductive bias, defined as the set of assumptions of a learning algorithm used to predict for unknown samples. See more discussion on DL model complexity in later sections.
+- Equipped with a larger model, we might be able to discover larger function classes and further find interpolating functions that have smaller norm and are thus “simpler”.
 
 ## Usage
 ```
