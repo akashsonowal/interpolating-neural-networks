@@ -1,7 +1,7 @@
 import pytest
 import tensorflow as tf
 from tensorflow.keras.layers import Dense
-from interpolating.models import ExperimentalMLP
+from interpolating_neural_networks.models import ExperimentalMLP
 
 @pytest.fixture
 def mlp():
