@@ -6,22 +6,12 @@ from interpolating_neural_networks.data import FinancialDataset, DistributedData
 
 def test_folder_contains_files():
     assert all(Path('data').joinpath(file_name).is_file() for file_name in ['c_50.csv', 'r2_50.csv'])
-
-def get_dataset():
-    train_datset, val_dataset = FinancialDataset(Path('data'), train_val_split=1/3, input_dim=50, linear=False)()
-    return train_dataset, val_dataset 
     
 @pytest.fixture
 def strategy():
     return tf.distribute.OneDeviceStrategy(device='/cpu:0')
 
-@pytest.fixture
-def train_dataset():
-    return get_dataset()[0]
-
-@pytest.fixture
-def val_dataset():
-    return get_dataset()[1]
+train_datset, val_dataset = FinancialDataset(Path('data'), train_val_split=1/3, input_dim=50, linear=False)()
 
 @pytest.fixture
 def dataloader(strategy, train_dataset, val_dataset):
