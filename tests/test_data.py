@@ -17,7 +17,7 @@ def strategy():
 
 @pytest.fixture
 def train_dataset():
-    return (tf.random.uniform((1000, 100), tf.random.uniform((1000, 1))
+    return (tf.random.uniform((1000, 100)), tf.random.uniform((1000, 1)))
 
 @pytest.fixture
 def val_dataset():
