@@ -2,6 +2,8 @@
 
 This repo contains the source code for observing double descent phenomena with neural networks in empirical asset pricing data.
 
+[](assets/new-bias-variance-tradeoff-curve)
+
 What is Deep Double Descent?
 
 Double descent phenomenon is when we increase the model size or number of training epochs, the performance first improves, then gets worse, and then improves again.
@@ -19,7 +21,9 @@ Key point: Because of the double descent, sufficiently large models undergo this
 $ pip install interpolating-neural-networks
 ```
 
-## Demo (Kaggle Notebook)
+## Results
+
+
 
 ## Notes
 - There are no regularization terms like weight decay, dropout.
@@ -36,6 +40,6 @@ If you find this method and/or code useful, please consider citing
   title = {Interpolating Neural Networks in Asset Pricing},
   url = {https://github.com/akashsonowal/interpolating-neural-networks},
   year = {2022},
-  note = "Version 1"
+  note = "Version 0.0.1"
 }
 ```
