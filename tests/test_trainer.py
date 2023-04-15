@@ -1,6 +1,6 @@
 import pytest
 import tensorflow as tf
-from experiment import MLPDistributedTrainer
+from experiment.trainer import MLPDistributedTrainer
 
 @pytest.fixture
 def strategy():
