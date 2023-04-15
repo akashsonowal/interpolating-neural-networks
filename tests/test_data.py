@@ -16,11 +16,11 @@ def val_dataset():
 
 @pytest.fixture
 def dataloader(strategy, train_dataset, val_dataset):
-    return DistributedDataLoader(strategy, train_dataset, val_dataset, batch_size=32, num_workers=1)
+    return DistributedDataLoader(strategy, train_dataset, val_dataset, batch_size=20, num_workers=1)
 
 def test_dataloader_shape(dataloader):
     train_dataloader, val_dataloader = dataloader()
     for x in train_dataloader:
-        assert x.shape == (32, 10)
+        assert x.shape == (20, 10)
     for x in val_dataloader:
-        assert x.shape == (32, 10)
+        assert x.shape == (20, 10)
