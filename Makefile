@@ -4,7 +4,7 @@ style:
 	black .
 	flake8
 	python3 -m isort .
-
+	
 # Cleaning
 .PHONY: clean
 clean: style
