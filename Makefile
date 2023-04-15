@@ -1,3 +1,6 @@
+# Makefile
+SHELL = /bin/bash
+
 # Styling
 .PHONY: style
 style:
