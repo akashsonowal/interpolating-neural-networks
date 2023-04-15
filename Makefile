@@ -1,13 +1,21 @@
 # Makefile
 SHELL = /bin/bash
 
+.PHONY: help
+help:
+	@echo "Commands."
+	@echo "venv  : Creates a virtual environment."
+	@echo "style : Executes style formating."
+	@echo "clean : Cleans all uncessary files."
+	@echo "test  : Executes test on code, data and models."
+	
 # Styling
 .PHONY: style
 style:
 	black .
 	flake8
 	python3 -m isort .
-	
+
 # Environment
 .ONESHELL:
 venv:
