@@ -5,8 +5,8 @@ import tensorflow as tf
 from interpolating_neural_networks.data import FinancialDataset, DistributedDataLoader
 
 def test_folder_contains_files():
-    assert all(Path('data').joinpath(file_name).is_file() for file_name in ['c_50.csv', 'r2_50.csv']])
-
+    assert all(Path('data').joinpath(file_name).is_file() for file_name in ['c_50.csv', 'r2_50.csv'])
+    
 @pytest.fixture
 def strategy():
     return tf.distribute.OneDeviceStrategy(device='/cpu:0')
