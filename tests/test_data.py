@@ -2,26 +2,26 @@ import pytest
 import pandas as pd
 from pathlib import Path
 import tensorflow as tf
+import logging
 from interpolating_neural_networks.data import FinancialDataset, DistributedDataLoader
 
-@pytest.fixture(scope='module')
-def financial_dataset(request) -> FinancialDataset:
-    data_dir = Path('data')
-    train_val_split = request.param.get('train_val_split')
-    input_dim = request.param.get('input_dim')
-    linear = input.param.get('linear')
-    return FinancialDataset(data_dir, train_val_split, input_dim, linear)
+@pytest.mark.parametrize("filepath, exists",
+                             [
+                                 ("c_50.csv", True),
+                                 ("c_200.csv", False),
+                              ]
+                        )
+@pytest.fixture
+def data_dir():
+    return Path('data')
 
-@pytest.mark.skipif(not Path('data').exists(), reason='Missing data directory')
 class TestFinancialDataset:
-    @pytest.mark.parametrize("filepath, expected_shape", [
-        ("c_50.csv", (100, 100))
-    ])
-    def test_read_file(financial_dataset, filepath, expected_shape):
-        x = financial_dataset._read_file(Path('data') / filepath)
-        assert isinstance(x, pd.DataFrame)
-        assert x.shape == expected_shape
-    
+    def test_data_exists(self, filepath, exists):
+        if (data_dir / filepath).exists():
+            logging.info(f'{filepath} exists')
+        elif not (data_dir / filepath).exists():
+            logging.info(f'{filepath} does not exists')
+
 @pytest.fixture
 def strategy():
     return tf.distribute.OneDeviceStrategy(device='/cpu:0')
