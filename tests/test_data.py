@@ -6,6 +6,10 @@ from interpolating_neural_networks.data import FinancialDataset, DistributedData
 
 def test_folder_contains_files():
     assert all(Path('data').joinpath(file_name).is_file() for file_name in ['c_50.csv', 'r2_50.csv'])
+
+@pytest.fixture
+def dataset():
+    return FinancialDataset(Path('data'), train_val_split=1/3, input_dim=50, linear=False)
     
 @pytest.fixture
 def strategy():
@@ -13,19 +17,21 @@ def strategy():
 
 @pytest.fixture
 def train_dataset():
-    return tf.random.uniform((1000, 10))
+    return dataset()[0]
 
 @pytest.fixture
 def val_dataset():
-    return tf.random.uniform((100, 10))
+    return dataset()[1]
 
 @pytest.fixture
 def dataloader(strategy, train_dataset, val_dataset):
-    return DistributedDataLoader(strategy, train_dataset, val_dataset, batch_size=20, num_workers=1)
+    return DistributedDataLoader(strategy, train_dataset, val_dataset, batch_size=32, num_workers=1)
 
 def test_dataloader_shape(dataloader):
     train_dataloader, val_dataloader = dataloader()
     for x in train_dataloader:
-        assert x.shape == (20, 10)
+        assert x[0].shape == (32, 100)
+        assert x[1].shape == (32, 1)
     for x in val_dataloader:
-        assert x.shape == (20, 10)
+        assert x[0].shape == (32, 100)
+        assert x[1].shape == (32, 1)
