@@ -1,4 +1,4 @@
-import Path
+from pathlib import Path
 from setuptools import setup, find_packages
 
 # Load packages from requirements.txt
