@@ -2,7 +2,7 @@
 
 This repo contains the source code for observing double descent phenomena with neural networks in empirical asset pricing data.
 
-[](assets/new-bias-variance-tradeoff-curve)
+![dd_curve](assets/new-bias-variance-tradeoff-curve)
 
 What is Deep Double Descent?
 
