@@ -11,7 +11,7 @@ test_packages = ["pytest==7.1.2"]
 
 setup(
   name = 'interpolating-neural-networks',
-  packages = find_packages(exclude=['examples']),
+  packages = find_packages(),
   version = '0.0.1',
   license = 'MIT',
   author = 'Akash Sonowal',
