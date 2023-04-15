@@ -1,4 +1,4 @@
-# interpolating-neural-networks
+# Interpolating Neural Networks
 
 This repo contains the source code for observing double descent phenomena with neural networks in empirical asset pricing data.
 
@@ -12,7 +12,7 @@ According to the bias-variance trade-off in classical statistical learning theor
 
 This double descent challenges this conventional wisdom.
 
-Key point: Because of the double descent, sufficiently large models undergo this behaviour where the test error first decreases then increases near the threshold(interpolation threshold - term used in the paper), and then decreases again.
+Key point: Because of the double descent, sufficiently large models undergo this behaviour where the test error first decreases then increases near the threshold (interpolation threshold - term used in the paper), and then decreases again.
 
 ## Usage
 ```
