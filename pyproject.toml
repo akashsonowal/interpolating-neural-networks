@@ -29,8 +29,3 @@ virtual_env = "venv"
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = "test_*.py"
-
-# PyPI publish
-[build-system]
-requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build_meta"
