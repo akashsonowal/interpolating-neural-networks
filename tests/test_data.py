@@ -1,4 +1,3 @@
-import os
 import pytest
 import pandas as pd
 from pathlib import Path
@@ -6,7 +5,7 @@ import tensorflow as tf
 from interpolating_neural_networks.data import FinancialDataset, DistributedDataLoader
 
 def test_folder_contains_files():
-    assert all([os.path.isfile(os.path.join('data', file_name)) for file_name in ['c_50.csv', 'r2_50.csv']])
+    assert all(Path('data').joinpath(file_name).is_file() for file_name in ['c_50.csv', 'r2_50.csv']])
 
 @pytest.fixture
 def strategy():
