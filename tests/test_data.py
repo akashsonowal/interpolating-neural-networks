@@ -1,6 +1,14 @@
 import pytest
+import pandas as pd
+from pathlib import Path
 import tensorflow as tf
-from interpolating_neural_networks.data import DistributedDataLoader
+from interpolating_neural_networks.data import FinancialDataset, DistributedDataLoader
+
+@pytest.fixture(scope='module')
+def financial_dataset(request) -> FinancialDataset:
+    data_dir = Path('data')
+    train_val_split = request.param.get('train_val_split')
+    
 
 @pytest.fixture
 def strategy():
