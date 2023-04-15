@@ -2,7 +2,7 @@
 
 This repo contains the source code for observing **double descent** phenomena with neural networks in **empirical asset pricing data**.
 
-![dd_curve](assets/new-bias-variance-risk-curve.png)
+![dd_curve](https://raw.githubusercontent.com/akashsonowal/interpolating-neural-networks/main/assets/new-bias-variance-risk-curve.png)
 Fig. A new double-U-shaped bias-variance risk curve for deep neural networks. (Image source: [original paper](https://arxiv.org/abs/1812.11118))
 
 Deep learning models are heavily over-parameterized and can often get to perfect results on training data. In the traditional view, like bias-variance trade-offs, this could be a disaster that nothing may generalize to the unseen test data. However, as is often the case, such “overfitted” (training error = 0) deep learning models still present a decent performance on out-of-sample test data (Refer above figure).
