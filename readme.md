@@ -18,7 +18,9 @@ There are many other explanations of better generalisation such as Smaller Intri
 In this work, we try to observe double descent phenomena in empirical asset pricing. The observation of double descent is fascinating as financial data are very noisy in comparison to image datasets (good signal to noise ratio).
 
 ```
-$ pip install interpolating-neural-networks
+$ git clone https://github.com/akashsonowal/interpolating-neural-networks/
+$ pip install -e .
+$ python experiment/run_experiment.py
 ```
 
 ## Notes:
