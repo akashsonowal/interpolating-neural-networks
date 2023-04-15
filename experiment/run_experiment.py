@@ -107,7 +107,7 @@ def main(args):
                 val_dataloader,
                 args.batch_size_per_replica * strategy.num_replicas_in_sync,
             )
-    else
+    else:
         for width in args.widths:
             model = get_distributed_model(
                 strategy, input_dim=args.input_dim, depth=None, width=width
