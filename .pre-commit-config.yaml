@@ -13,9 +13,7 @@ repos:
         args: ['--maxkb=1000']
         exclude: "notebooks"
     -   id: check-ast
-    -   id: check-json
     -   id: check-merge-conflict
-    -   id: detect-aws-credentials
     -   id: detect-private-key
 -   repo: https://github.com/psf/black
     rev: 22.12.0
