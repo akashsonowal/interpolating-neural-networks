@@ -1,2 +1,6 @@
+# Distribution / packaging
+*.egg-info/
+MANIFEST
+
 # Environment
 venv/
