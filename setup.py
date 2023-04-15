@@ -14,7 +14,7 @@ setup(
   keywords = ["double descent", "deep learning", "generalization", "asset pricing"],
   install_requires = [
   ],
-  extra_requires = {"dev": style_packages, "test": test_packages},
+  extra_requires = {"dev": style_packages +  ["pre-commit==2.19.0"], "test": test_packages},
   classifiers = [
           "Development Status :: 4 - Beta",
           "Intended Audience :: Science/Research",
