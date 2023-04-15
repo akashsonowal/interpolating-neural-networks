@@ -21,7 +21,7 @@ def train_dataset():
 
 @pytest.fixture
 def val_dataset():
-    return (tf.random.uniform((100, 100), tf.random.uniform((100, 1))
+    return (tf.random.uniform((100, 100)), tf.random.uniform((100, 1)))
 
 @pytest.fixture
 def dataloader(strategy, train_dataset, val_dataset):
