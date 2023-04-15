@@ -11,6 +11,16 @@ def financial_dataset(request) -> FinancialDataset:
     input_dim = request.param.get('input_dim')
     linear = input.param.get('linear')
     return FinancialDataset(data_dir, train_val_split, input_dim, linear)
+
+@pytest.mark.skipif(not Path('data').exists(), reason='Missing data directory')
+class TestFinancialDataset:
+    @pytest.mark.parameterize("filepath, expected_shape", [
+        ("c_50.csv", (100, 100))
+    ])
+    def test_read_file(financial_dataset, filepath, expected_shape):
+        x = financial_dataset._read_file(Path('data') / filepath)
+        assert isinstance(x, pd.DataFrame)
+        assert x.shape == expected_shape
     
 @pytest.fixture
 def strategy():
