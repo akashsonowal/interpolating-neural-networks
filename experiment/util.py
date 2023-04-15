@@ -1,10 +1,11 @@
 #!/usr/bin/env python
-# coding=utf-8
-import wandb
 import tensorflow as tf
+import wandb
+
 
 class WandbCallBack(tf.keras.callbacks.Callback):
-  def __init__(self):
-      super(WandbCallBack, self).__init__()
-  def on_train_end(self, logs={}):
-      wandb.log(logs)
+    def __init__(self):
+        super().__init__()
+
+    def on_train_end(self, logs={}):
+        wandb.log(logs)
