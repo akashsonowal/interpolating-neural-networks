@@ -26,7 +26,7 @@ $ python experiment/run_experiment.py
 ## Notes:
 
 - There are no regularization terms like weight decay, dropout.
-- Each network is trained for a long time to achieve near-zero training risk. The learning rate is adjusted differently for models of different sizes.
+- Each network is trained for a long time to achieve zero training risk. The learning rate is adjusted differently for models of different sizes.
 - For faster training, GPUs are recommended.
 
 ## Citation
